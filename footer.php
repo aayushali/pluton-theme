@@ -13,7 +13,15 @@
 
 	<footer id="colophon" class="site-footer">
         <div class="footer">
-            <p>&copy; 2013 Theme by <a href="http://www.graphberry.com">GraphBerry</a>, <a href="http://goo.gl/NM84K2">Documentation</a></p>
+	        <?php
+	        printf(
+		        '%s. %s &copy; %s',
+		        get_bloginfo('name'),
+		        get_theme_mod('nd_dosth_copyright_text'),
+		        date_i18n( 'Y' )
+	        );
+	        ?>
+<!--            <p>&copy; 2013 Theme by <a href="http://www.graphberry.com">GraphBerry</a>, <a href="http://goo.gl/NM84K2">Documentation</a></p>-->
         </div>
 	</footer><!-- #colophon -->
 </div><!-- #page -->

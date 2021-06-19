@@ -93,7 +93,8 @@
         });
 
         // Get the id of the current element
-        cur = cur[cur.length - 1];
+      /*
+ cur = cur[cur.length - 1];
         var id = cur && cur.length ? cur[0].id : "";
 
         if (lastId !== id) {
@@ -103,7 +104,8 @@
             .parent().removeClass("active")
             .end().filter("[href=#" + id + "]").parent().addClass("active");
         }
-    });
+       */
+   });
 
     /*
     Function for scroliing to top
