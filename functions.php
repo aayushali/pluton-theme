@@ -123,10 +123,12 @@ function plutonwp_scripts() {
 	wp_enqueue_style( 'jquery.bxslider', get_template_directory_uri() . '/css/jquery.bxslider.css', array(), _S_VERSION );
 	wp_enqueue_style( 'animate', get_template_directory_uri() . '/css/animate.css', array(), _S_VERSION );
 	wp_style_add_data( 'plutonwp-style', 'rtl', 'replace' );
+	wp_enqueue_script( 'jquery' );
+	wp_enqueue_script( 'app', get_template_directory_uri() . '/js/app.js', array(), _S_VERSION, true );
 	wp_enqueue_script( 'plutonwp-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
 	wp_enqueue_script( 'jquery.mixitup', get_template_directory_uri() . '/js/jquery.mixitup.js', array(), _S_VERSION, true );
-	wp_enqueue_script( 'modernizr', get_template_directory_uri() . '/js/jquery.mixitup.js', array(), _S_VERSION, true );
-	wp_enqueue_script( 'jquery.mixitup', get_template_directory_uri() . '/js/modernizr.custom.js', array(), _S_VERSION, true );
+	wp_enqueue_script( 'bootstrap', get_template_directory_uri() . '/js/bootstrap.js', array(), _S_VERSION, true );
+	wp_enqueue_script( 'modernizr.custom', get_template_directory_uri() . '/js/modernizr.custom.js', array(), _S_VERSION, true );
 	wp_enqueue_script( 'jquery.bxslider', get_template_directory_uri() . '/js/jquery.bxslider.js', array(), _S_VERSION, true );
 	wp_enqueue_script( 'cslider', get_template_directory_uri() . '/js/jquery.cslider.js', array(), _S_VERSION, true );
 	wp_enqueue_script( 'jquery.placeholder', get_template_directory_uri() . '/js/jquery.placeholder.js', array(), _S_VERSION, true );
@@ -197,11 +199,11 @@ function wp_slider_post_type() {
 		'has_archive'       => true,
 		'hierarchical'      => true,
 		'menu_position'     => 5,
-		'supports' => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
+		'supports'          => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
 	);
-
-	register_post_type('slider', $args);
+	register_post_type( 'slider', $args );
 }
-add_action('init', 'wp_slider_post_type');
+
+add_action( 'init', 'wp_slider_post_type' );
 
 
