@@ -47,7 +47,8 @@ get_header();
         <div class="container">
             <!-- Start title section -->
             <div class="title">
-                <h1>What We Do?</h1>
+                <h1>What We Do?
+                </h1>
                 <!-- Section's title goes here -->
                 <p>Duis mollis placerat quam, eget laoreet tellus tempor eu. Quisque dapibus in purus in dignissim.</p>
                 <!--Simple description for section goes here. -->

@@ -204,8 +204,6 @@ function wp_slider_post_type() {
 	register_post_type( 'slider', $args );
 }
 
-
-
 function wp_services_post_type() {
 	$labels = array(
 		'name'                  => _x( 'Services', 'Post type general name', 'textdomain' ),
@@ -248,45 +246,99 @@ function wp_services_post_type() {
 	);
 	register_post_type( 'service', $args );
 }
-add_action('init', 'wp_services_post_type');
 
-
-
-
-
-
-
+add_action( 'init', 'wp_services_post_type' );
 add_action( 'init', 'wp_slider_post_type' );
 function your_php_code( $wp_customize ) {
 	// Theme Options Panel
 	$wp_customize->add_panel( 'nd_dosth_theme_options', array(
-			//'priority'       => 100,
-			'title'       => __( 'Theme Options', 'nd_dosth' ),
-			'description' => __( 'Theme Modifications like color scheme, theme texts and layout preferences can be done here', 'nd_dosth' ),
-		) );
+		//'priority'       => 100,
+		'title'       => __( 'Theme Options', 'nd_dosth' ),
+		'description' => __( 'Theme Modifications like color scheme, theme texts and layout preferences can be done here', 'nd_dosth' ),
+	) );
 	// Text Options Section Inside Theme
 	$wp_customize->add_section( 'nd_dosth_text_options', array(
-			'title'    => __( 'Text Options', 'nd_dosth' ),
-			'priority' => 1,
-			'panel'    => 'nd_dosth_theme_options'
-		) );
+		'title'    => __( 'Text Options', 'nd_dosth' ),
+		'priority' => 1,
+		'panel'    => 'nd_dosth_theme_options'
+	) );
 // Setting for Copyright text.
 	$wp_customize->add_setting( 'nd_dosth_copyright_text', array(
-			'default'           => __( 'All rights reserved ', 'nd_dosth' ),
-			'sanitize_callback' => 'sanitize_text_field',
-			'transport'         => 'refresh',
-		) );
+		'default'           => __( 'All rights reserved ', 'nd_dosth' ),
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport'         => 'refresh',
+	) );
 // Control for Copyright text
-	$wp_customize->add_control( 'nd_dosth_copyright_text',
-		array(
-			'type'        => 'text',
-			'priority'    => 10,
-			'section'     => 'nd_dosth_text_options',
-			'label'       => 'Copyright text',
-			'description' => 'Text put here will be outputted in the footer',
-		)
-	);
+	$wp_customize->add_control( 'nd_dosth_copyright_text', array(
+		'type'        => 'text',
+		'priority'    => 10,
+		'section'     => 'nd_dosth_text_options',
+		'label'       => 'Copyright text',
+		'description' => 'Text put here will be outputted in the footer',
+	) );
 }
 
 add_action( 'customize_register', 'your_php_code' );
+function service_add_meta_box() {
+//this will add the metabox for the service post type
+	$screens = [ 'Services' ];
+	foreach ( $screens as $screen ) {
+		if ( get_the_title() == $screen ) {//condition
+			add_meta_box( 'service_sectionid', __( 'Service Page Heading', 'service_textdomain' ), 'service_meta_box_callback', 'page', 'normal', 'high' );
+		}
+	}
+}
 
+add_action( 'add_meta_boxes', 'service_add_meta_box' );
+/**
+ * Prints the box content.
+ *
+ * @param WP_Post $post The object for the current post/page.
+ */
+function service_meta_box_callback( $post ) {
+// Add a nonce field so we can check for it later.
+	wp_nonce_field( 'service_save_meta_box_data', 'service_meta_box_nonce' );
+	/*
+	 * Use get_post_meta() to retrieve an existing value
+	 * from the database and use the value for the form.
+	 */
+	$value = get_post_meta( $post->ID, '_my_meta_value_key', true );
+	echo '<label for="service_new_field">';
+	_e( 'Heading text', 'service_textdomain' );
+	echo '</label> ';
+	echo '<input type="text" id="service_new_field" name="service_new_field" value="' . esc_attr( $value ) . '" size="100" />';
+}
+
+/**
+ * When the post is saved, saves our custom data.
+ *
+ * @param int $post_id The ID of the post being saved.
+ */
+function service_save_meta_box_data( $post_id ) {
+	if ( ! isset( $_POST['service_meta_box_nonce'] ) ) {
+		return;
+	}
+	if ( ! wp_verify_nonce( $_POST['service_meta_box_nonce'], 'service_save_meta_box_data' ) ) {
+		return;
+	}
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+		return;
+	}
+	// Check the user's permissions.
+	if ( isset( $_POST['post_type'] ) && 'page' == $_POST['post_type'] ) {
+		if ( ! current_user_can( 'edit_page', $post_id ) ) {
+			return;
+		}
+	} else {
+		if ( ! current_user_can( 'edit_post', $post_id ) ) {
+			return;
+		}
+	}
+	if ( ! isset( $_POST['service_new_field'] ) ) {
+		return;
+	}
+	$my_data = sanitize_text_field( $_POST['service_new_field'] );
+	update_post_meta( $post_id, '_my_meta_value_key', $my_data );
+}
+
+add_action( 'save_post', 'service_save_meta_box_data' );
