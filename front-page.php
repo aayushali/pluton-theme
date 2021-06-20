@@ -42,4 +42,41 @@ get_header();
         </div>
     </div>
     <!-- End home section -->
+    <!-- Service section start -->
+    <div class="section primary-section" id="service">
+        <div class="container">
+            <!-- Start title section -->
+            <div class="title">
+                <h1>What We Do?</h1>
+                <!-- Section's title goes here -->
+                <p>Duis mollis placerat quam, eget laoreet tellus tempor eu. Quisque dapibus in purus in dignissim.</p>
+                <!--Simple description for section goes here. -->
+            </div>
+            <div class="row-fluid">
+				<?php
+				$args      = array(
+					'post_type' => 'service'
+				);
+				$the_query = new WP_Query( $args );
+				if ( $the_query->have_posts() ):
+					while ( $the_query->have_posts() ):
+						$the_query->the_post();
+						?>
+                        <div class="span4">
+                            <div class="centered service">
+                                <div class="circle-border zoom-in">
+                                    <img class="img-circle" src="<?php the_post_thumbnail_url(); ?>" alt="service 1">
+                                </div>
+                                <h3><?php the_title(); ?></h3>
+                                <p><?php echo get_the_excerpt(); ?></p>
+                            </div>
+                        </div>
+					<?php endwhile;
+				endif;
+				wp_reset_postdata();
+				?>
+            </div>
+        </div>
+    </div>
+    <!-- Service section end -->
 <?php get_footer(); ?>
