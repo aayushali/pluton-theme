@@ -342,3 +342,144 @@ function service_save_meta_box_data( $post_id ) {
 }
 
 add_action( 'save_post', 'service_save_meta_box_data' );
+
+
+function portfolio_post_type() {
+	$labels = array(
+		'name'                  => _x( 'Portfolios', 'Post type general name', 'textdomain' ),
+		'singular_name'         => _x( 'Portfolio', 'Post type singular name', 'textdomain' ),
+		'menu_name'             => _x( 'Portfolio', 'Admin Menu text', 'textdomain' ),
+		'add_new'               => __( 'Add new', 'textdomain' ),
+		'add_new_item'          => __( 'Add New portfolio', 'textdomain' ),
+		'new_item'              => __( 'New portfolio', 'textdomain' ),
+		'edit_item'             => __( 'Edit portfolio', 'textdomain' ),
+		'view_item'             => __( 'View portfolio', 'textdomain' ),
+		'all_items'             => __( 'All portfolios', 'textdomain' ),
+		'search_items'          => __( 'Search portfolios', 'textdomain' ),
+		'parent_item_colon'     => __( 'Parent portfolios:', 'textdomain' ),
+		'not_found'             => __( 'No portfolios found.', 'textdomain' ),
+		'not_found_in_trash'    => __( 'No portfolios found in Trash.', 'textdomain' ),
+		'featured_image'        => _x( 'portfolios Cover Image', 'Overrides the “Featured Image” phrase for this post type. Added in 4.3', 'textdomain' ),
+		'set_featured_image'    => _x( 'Set cover image', 'Overrides the “Set featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
+		'remove_featured_image' => _x( 'Remove cover image', 'Overrides the “Remove featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
+		'use_featured_image'    => _x( 'Use as cover image', 'Overrides the “Use as featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
+		'archives'              => _x( 'portfolio archives', 'The post type archive label used in nav menus. Default “Post Archives”. Added in 4.4', 'textdomain' ),
+		'insert_into_item'      => _x( 'Insertt into portfolio', 'Overrides the “Insert into post”/”Insert into page” phrase (used when inserting media into a post). Added in 4.4', 'textdomain' ),
+		'uploaded_to_this_item' => _x( 'Uploaded to this portfolio', 'Overrides the “Uploaded to this post”/”Uploaded to this page” phrase (used when viewing media attached to a post). Added in 4.4', 'textdomain' ),
+		'filter_items_list'     => _x( 'Filter portfolios list', 'Screen reader text for the filter links heading on the post type listing screen. Default “Filter posts list”/”Filter pages list”. Added in 4.4', 'textdomain' ),
+		'items_list_navigation' => _x( 'portfolios list navigation', 'Screen reader text for the pagination heading on the post type listing screen. Default “Posts list navigation”/”Pages list navigation”. Added in 4.4', 'textdomain' ),
+		'items_list'            => _x( 'portfolios list', 'Screen reader text for the items list heading on the post type listing screen. Default “Posts list”/”Pages list”. Added in 4.4', 'textdomain' ),
+	);
+	$args   = array(
+		'labels'            => $labels,
+		'public'            => true,
+		'publicly_querable' => true,
+		'show_ui'           => true,
+		'show_in_menu'      => true,
+		'query_bar'         => true,
+		'rewrite'           => array( 'slug' => 'portfolio' ),
+		'capability_type'   => 'post',
+		'has_archive'       => true,
+		'hierarchical'      => true,
+		'menu_position'     => 5,
+		'supports'          => array( 'title', 'thumbnail', 'editor','excerpt' ),
+	);
+	register_post_type( 'portfolio', $args );
+
+}
+add_action('init', 'portfolio_post_type');
+
+//hook into the init action and call create_book_taxonomies when it fires
+add_action( 'init', 'create_web_taxonomy', 999);
+
+//create a custom taxonomy name it topics for your posts
+
+function create_web_taxonomy() {
+
+// Add new taxonomy, make it hierarchical like categories
+//first do the translations part for GUI
+
+	$labels = array(
+		'name' => _x( 'Web', 'taxonomy general name' ),
+		'singular_name' => _x( 'Web', 'taxonomy singular name' ),
+		'search_items' =>  __( 'Search Webs' ),
+		'all_items' => __( 'All Webs' ),
+		'parent_item' => __( 'Parent Web' ),
+		'parent_item_colon' => __( 'Parent Web:' ),
+		'edit_item' => __( 'Edit Web' ),
+		'update_item' => __( 'Update Web' ),
+		'add_new_item' => __( 'Add New Web' ),
+		'new_item_name' => __( 'New Web Name' ),
+		'menu_name' => __( 'Web' ),
+	);
+
+// Now register the taxonomy
+
+	register_taxonomy('web',array('portfolio'), array(
+		'hierarchical' => true,
+		'labels' => $labels,
+		'show_ui' => true,
+		'show_admin_column' => true,
+		'query_var' => true,
+		'rewrite' => array( 'slug' => 'web' ),
+	));
+
+}
+
+function create_photo_taxonomy() {
+	$labels = array(
+		'name' => _x( 'photo', 'taxonomy general name' ),
+		'singular_name' => _x( 'photo', 'taxonomy singular name' ),
+		'search_items' =>  __( 'Search photos' ),
+		'all_items' => __( 'All photos' ),
+		'parent_item' => __( 'Parent photo' ),
+		'parent_item_colon' => __( 'Parent photo:' ),
+		'edit_item' => __( 'Edit photo' ),
+		'update_item' => __( 'Update photo' ),
+		'add_new_item' => __( 'Add New photo' ),
+		'new_item_name' => __( 'New photo Name' ),
+		'menu_name' => __( 'Photo' ),
+	);
+
+	register_taxonomy('photo',array('portfolio'), array(
+		'hierarchical' => true,
+		'labels' => $labels,
+		'show_ui' => true,
+		'show_admin_column' => true,
+		'query_var' => true,
+		'rewrite' => array( 'slug' => 'photo' ),
+	));
+
+}
+add_action('init','create_photo_taxonomy', 999);
+
+function create_identity_taxonomy() {
+	$labels = array(
+		'name' => _x( 'identity', 'taxonomy general name' ),
+		'singular_name' => _x( 'identity', 'taxonomy singular name' ),
+		'search_items' =>  __( 'Search identitys' ),
+		'all_items' => __( 'All identitys' ),
+		'parent_item' => __( 'Parent identity' ),
+		'parent_item_colon' => __( 'Parent identity:' ),
+		'edit_item' => __( 'Edit identity' ),
+		'update_item' => __( 'Update identity' ),
+		'add_new_item' => __( 'Add New identity' ),
+		'new_item_name' => __( 'New identity Name' ),
+		'menu_name' => __( 'Identity' ),
+	);
+
+	register_taxonomy('identity',array('portfolio'), array(
+		'hierarchical' => true,
+		'labels' => $labels,
+		'show_ui' => true,
+		'show_admin_column' => true,
+		'query_var' => true,
+		'rewrite' => array( 'slug' => 'identity' ),
+	));
+
+}
+add_action('init','create_identity_taxonomy', 999);
+
+
+
+
