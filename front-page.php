@@ -106,12 +106,12 @@ get_header();
             <div id="single-project">
                 <div id="slidingDiv" class="toggleDiv row-fluid single-project">
                     <div class="span6">
-                        <img src="images/Portfolio01.png" alt="project 1"/>
+                        <img src="<?php echo get_template_directory_uri(); ?> . /images/Portfolio01.png" alt="project 1"/>
                     </div>
                     <div class="span6">
                         <div class="project-description">
                             <div class="project-title clearfix">
-                                <h3>Webste for Some Client</h3>
+                                <h3>Website for Some Client</h3>
                                 <span class="show_hide close">
                                         <i class="icon-cancel"></i>
                                     </span>
