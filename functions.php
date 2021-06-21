@@ -124,15 +124,15 @@ function plutonwp_scripts() {
 	wp_enqueue_style( 'animate', get_template_directory_uri() . '/css/animate.css', array(), _S_VERSION );
 	wp_style_add_data( 'plutonwp-style', 'rtl', 'replace' );
 	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script( 'app', get_template_directory_uri() . '/js/app.js', array(), _S_VERSION, true );
-	wp_enqueue_script( 'plutonwp-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
 	wp_enqueue_script( 'jquery.mixitup', get_template_directory_uri() . '/js/jquery.mixitup.js', array(), _S_VERSION, true );
-	wp_enqueue_script( 'bootstrap', get_template_directory_uri() . '/js/bootstrap.js', array(), _S_VERSION, true );
+	wp_enqueue_script( 'bootstrapJs', get_template_directory_uri() . '/js/bootstrap.js', array(), _S_VERSION, true );
 	wp_enqueue_script( 'modernizr.custom', get_template_directory_uri() . '/js/modernizr.custom.js', array(), _S_VERSION, true );
 	wp_enqueue_script( 'jquery.bxslider', get_template_directory_uri() . '/js/jquery.bxslider.js', array(), _S_VERSION, true );
 	wp_enqueue_script( 'cslider', get_template_directory_uri() . '/js/jquery.cslider.js', array(), _S_VERSION, true );
 	wp_enqueue_script( 'jquery.placeholder', get_template_directory_uri() . '/js/jquery.placeholder.js', array(), _S_VERSION, true );
 	wp_enqueue_script( 'jquery.inview', get_template_directory_uri() . '/js/jquery.inview.js', array(), _S_VERSION, true );
+	wp_enqueue_script( 'app', get_template_directory_uri() . '/js/app.js', array(), _S_VERSION, true );
+	wp_enqueue_script( 'plutonwp-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
@@ -279,69 +279,99 @@ function your_php_code( $wp_customize ) {
 }
 
 add_action( 'customize_register', 'your_php_code' );
-function service_add_meta_box() {
-//this will add the metabox for the service post type
-	$screens = [ 'Services' ];
-	foreach ( $screens as $screen ) {
-		if ( get_the_title() == $screen ) {//condition
-			add_meta_box( 'service_sectionid', __( 'Service Page Heading', 'service_textdomain' ), 'service_meta_box_callback', 'page', 'normal', 'high' );
-		}
-	}
+function add_service_title( $wp_customize ) {
+	$wp_customize->add_panel( 'plutonwp_edit_services', array(
+		'title'       => __( 'Edit Services', 'pluton' ),
+		'description' => __( 'Services Title and Description Modification', 'pluton' ),
+	) );
+	$wp_customize->add_section( 'plutonwp_title_services', array(
+		'title'    => __( 'Edit Service Title', 'pluton' ),
+		'priority' => 1,
+		'panel'    => 'plutonwp_edit_services'
+	) );
+	$wp_customize->add_section( 'plutonwp_description_services', array(
+		'title'    => __( 'Edit Description', 'pluton' ),
+		'priority' => 2,
+		'panel'    => 'plutonwp_edit_services'
+	) );
+	$wp_customize->add_setting( 'plutonwp_service_title', array(
+		'default'           => __( 'What We Do?', 'pluton' ),
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport'         => 'refresh'
+	) );
+	$wp_customize->add_setting( 'plutonwp_description_services', array(
+		'default'           => __( 'Duis mollis placerat quam, eget laoreet tellus tempor eu. Quisque dapibus in purus in dignissim.', 'pluton' ),
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport'         => 'refresh'
+	) );
+	$wp_customize->add_control( 'plutonwp_service_title', array(
+		'default'     => 'text',
+		'priority'    => 10,
+		'section'     => 'plutonwp_title_services',
+		'label'       => 'Title text ',
+		'description' => 'Text put here will be outputted in the services title'
+	) );
+	$wp_customize->add_control( 'plutonwp_description_services', array(
+		'default'     => 'text',
+		'priority'    => 15,
+		'section'     => 'plutonwp_description_services',
+		'label'       => 'Description text',
+		'description' => 'Text put here will be outputted in the services description'
+	) );
 }
 
-add_action( 'add_meta_boxes', 'service_add_meta_box' );
-/**
- * Prints the box content.
- *
- * @param WP_Post $post The object for the current post/page.
- */
-function service_meta_box_callback( $post ) {
-// Add a nonce field so we can check for it later.
-	wp_nonce_field( 'service_save_meta_box_data', 'service_meta_box_nonce' );
-	/*
-	 * Use get_post_meta() to retrieve an existing value
-	 * from the database and use the value for the form.
-	 */
-	$value = get_post_meta( $post->ID, '_my_meta_value_key', true );
-	echo '<label for="service_new_field">';
-	_e( 'Heading text', 'service_textdomain' );
-	echo '</label> ';
-	echo '<input type="text" id="service_new_field" name="service_new_field" value="' . esc_attr( $value ) . '" size="100" />';
+add_action( 'customize_register', 'add_service_title' );
+
+
+function add_portfolio_title( $wp_customize ){
+
+	$wp_customize -> add_panel( 'plutonwp_edit_portfolio', array(
+		'title' => __( 'Edit Portfolio', 'pluton'),
+		'description' => __( 'Portfolio Title and Description Modification', 'pluton'),
+	));
+
+	$wp_customize -> add_section('plutonwp_title_portfolio', array(
+		'title' => __('Edit Portfolio Title', 'pluton'),
+		'priority' => 1,
+		'panel' => 'plutonwp_edit_portfolio'
+	));
+
+	$wp_customize -> add_section('plutowp_description_portfolio', array(
+		'title' => __('Edit Portfolio Description', 'pluton'),
+		'priority' => 2,
+		'panel' => 'plutonwp_edit_portfolio'
+	));
+
+	$wp_customize -> add_setting('plutonwp_portfolio_title', array(
+		'default' => __('Have You Seen our Works?', 'pluton'),
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport' => 'refresh'
+	));
+	$wp_customize -> add_setting('plutonwp_portfolio_description', array(
+		'default' => __('Duis mollis placerat quam, eget laoreet tellus tempor eu. Quisque dapibus in purus in dignissim.', 'pluton'),
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport' => 'refresh'
+	));
+
+	$wp_customize -> add_control('plutonwp_portfolio_title', array(
+		'default' => 'text',
+		'priority' => 15,
+		'section' => 'plutonwp_title_portfolio',
+		'label' => 'Title text',
+		'description' => 'Text put here will be outputted in the portfolio title'
+	));
+
+	$wp_customize -> add_control('plutonwp_portfolio_description', array(
+		'default' => 'textarea',
+		'priority' => 20,
+		'section' => 'plutowp_description_portfolio',
+		'label' => 'Description text',
+		'description'=> 'Text put here will be outputtted in the portfolio Description'
+	));
 }
 
-/**
- * When the post is saved, saves our custom data.
- *
- * @param int $post_id The ID of the post being saved.
- */
-function service_save_meta_box_data( $post_id ) {
-	if ( ! isset( $_POST['service_meta_box_nonce'] ) ) {
-		return;
-	}
-	if ( ! wp_verify_nonce( $_POST['service_meta_box_nonce'], 'service_save_meta_box_data' ) ) {
-		return;
-	}
-	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-		return;
-	}
-	// Check the user's permissions.
-	if ( isset( $_POST['post_type'] ) && 'page' == $_POST['post_type'] ) {
-		if ( ! current_user_can( 'edit_page', $post_id ) ) {
-			return;
-		}
-	} else {
-		if ( ! current_user_can( 'edit_post', $post_id ) ) {
-			return;
-		}
-	}
-	if ( ! isset( $_POST['service_new_field'] ) ) {
-		return;
-	}
-	$my_data = sanitize_text_field( $_POST['service_new_field'] );
-	update_post_meta( $post_id, '_my_meta_value_key', $my_data );
-}
+add_action('customize_register', 'add_portfolio_title');
 
-add_action( 'save_post', 'service_save_meta_box_data' );
 
 
 function portfolio_post_type() {
@@ -382,103 +412,90 @@ function portfolio_post_type() {
 		'has_archive'       => true,
 		'hierarchical'      => true,
 		'menu_position'     => 5,
-		'supports'          => array( 'title', 'thumbnail', 'editor','excerpt' ),
+		'supports'          => array( 'title', 'thumbnail', 'editor', 'excerpt' ),
 	);
 	register_post_type( 'portfolio', $args );
-
 }
-add_action('init', 'portfolio_post_type');
 
+add_action( 'init', 'portfolio_post_type' );
 //hook into the init action and call create_book_taxonomies when it fires
-add_action( 'init', 'create_web_taxonomy', 999);
-
+add_action( 'init', 'create_web_taxonomy', 999 );
 //create a custom taxonomy name it topics for your posts
-
 function create_web_taxonomy() {
-
-// Add new taxonomy, make it hierarchical like categories
-//first do the translations part for GUI
-
 	$labels = array(
-		'name' => _x( 'Web', 'taxonomy general name' ),
-		'singular_name' => _x( 'Web', 'taxonomy singular name' ),
-		'search_items' =>  __( 'Search Webs' ),
-		'all_items' => __( 'All Webs' ),
-		'parent_item' => __( 'Parent Web' ),
+		'name'              => _x( 'Web', 'taxonomy general name' ),
+		'singular_name'     => _x( 'Web', 'taxonomy singular name' ),
+		'search_items'      => __( 'Search Webs' ),
+		'all_items'         => __( 'All Webs' ),
+		'parent_item'       => __( 'Parent Web' ),
 		'parent_item_colon' => __( 'Parent Web:' ),
-		'edit_item' => __( 'Edit Web' ),
-		'update_item' => __( 'Update Web' ),
-		'add_new_item' => __( 'Add New Web' ),
-		'new_item_name' => __( 'New Web Name' ),
-		'menu_name' => __( 'Web' ),
+		'edit_item'         => __( 'Edit Web' ),
+		'update_item'       => __( 'Update Web' ),
+		'add_new_item'      => __( 'Add New Web' ),
+		'new_item_name'     => __( 'New Web Name' ),
+		'menu_name'         => __( 'Web' ),
 	);
-
 // Now register the taxonomy
-
-	register_taxonomy('web',array('portfolio'), array(
-		'hierarchical' => true,
-		'labels' => $labels,
-		'show_ui' => true,
+	register_taxonomy( 'web', array( 'portfolio' ), array(
+		'hierarchical'      => true,
+		'labels'            => $labels,
+		'show_ui'           => true,
 		'show_admin_column' => true,
-		'query_var' => true,
-		'rewrite' => array( 'slug' => 'web' ),
-	));
-
+		'query_var'         => true,
+		'rewrite'           => array( 'slug' => 'web' ),
+	) );
 }
 
 function create_photo_taxonomy() {
 	$labels = array(
-		'name' => _x( 'Photo', 'taxonomy general name' ),
-		'singular_name' => _x( 'Photo', 'taxonomy singular name' ),
-		'search_items' =>  __( 'Search photos' ),
-		'all_items' => __( 'All photos' ),
-		'parent_item' => __( 'Parent photo' ),
+		'name'              => _x( 'Photo', 'taxonomy general name' ),
+		'singular_name'     => _x( 'Photo', 'taxonomy singular name' ),
+		'search_items'      => __( 'Search photos' ),
+		'all_items'         => __( 'All photos' ),
+		'parent_item'       => __( 'Parent photo' ),
 		'parent_item_colon' => __( 'Parent photo:' ),
-		'edit_item' => __( 'Edit photo' ),
-		'update_item' => __( 'Update photo' ),
-		'add_new_item' => __( 'Add New photo' ),
-		'new_item_name' => __( 'New photo Name' ),
-		'menu_name' => __( 'Photo' ),
+		'edit_item'         => __( 'Edit photo' ),
+		'update_item'       => __( 'Update photo' ),
+		'add_new_item'      => __( 'Add New photo' ),
+		'new_item_name'     => __( 'New photo Name' ),
+		'menu_name'         => __( 'Photo' ),
 	);
-
-	register_taxonomy('photo',array('portfolio'), array(
-		'hierarchical' => true,
-		'labels' => $labels,
-		'show_ui' => true,
+	register_taxonomy( 'photo', array( 'portfolio' ), array(
+		'hierarchical'      => true,
+		'labels'            => $labels,
+		'show_ui'           => true,
 		'show_admin_column' => true,
-		'query_var' => true,
-		'rewrite' => array( 'slug' => 'photo' ),
-	));
-
+		'query_var'         => true,
+		'rewrite'           => array( 'slug' => 'photo' ),
+	) );
 }
-add_action('init','create_photo_taxonomy', 999);
 
+add_action( 'init', 'create_photo_taxonomy', 999 );
 function create_identity_taxonomy() {
 	$labels = array(
-		'name' => _x( 'Identity', 'taxonomy general name' ),
-		'singular_name' => _x( 'Identity', 'taxonomy singular name' ),
-		'search_items' =>  __( 'Search identitys' ),
-		'all_items' => __( 'All identitys' ),
-		'parent_item' => __( 'Parent identity' ),
+		'name'              => _x( 'Identity', 'taxonomy general name' ),
+		'singular_name'     => _x( 'Identity', 'taxonomy singular name' ),
+		'search_items'      => __( 'Search identitys' ),
+		'all_items'         => __( 'All identitys' ),
+		'parent_item'       => __( 'Parent identity' ),
 		'parent_item_colon' => __( 'Parent identity:' ),
-		'edit_item' => __( 'Edit identity' ),
-		'update_item' => __( 'Update identity' ),
-		'add_new_item' => __( 'Add New identity' ),
-		'new_item_name' => __( 'New identity Name' ),
-		'menu_name' => __( 'Identity' ),
+		'edit_item'         => __( 'Edit identity' ),
+		'update_item'       => __( 'Update identity' ),
+		'add_new_item'      => __( 'Add New identity' ),
+		'new_item_name'     => __( 'New identity Name' ),
+		'menu_name'         => __( 'Identity' ),
 	);
-
-	register_taxonomy('identity',array('portfolio'), array(
-		'hierarchical' => true,
-		'labels' => $labels,
-		'show_ui' => true,
+	register_taxonomy( 'identity', array( 'portfolio' ), array(
+		'hierarchical'      => true,
+		'labels'            => $labels,
+		'show_ui'           => true,
 		'show_admin_column' => true,
-		'query_var' => true,
-		'rewrite' => array( 'slug' => 'identity' ),
-	));
-
+		'query_var'         => true,
+		'rewrite'           => array( 'slug' => 'identity' ),
+	) );
 }
-add_action('init','create_identity_taxonomy', 999);
+
+add_action( 'init', 'create_identity_taxonomy', 999 );
 
 
 

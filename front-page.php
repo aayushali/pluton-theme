@@ -57,11 +57,10 @@ get_header();
             <div class="container">
                 <!-- Start title section -->
                 <div class="title">
-                    <h1>What We Do?
+                    <h1><?php echo get_theme_mod('plutonwp_service_title'); ?>
                     </h1>
                     <!-- Section's title goes here -->
-                    <p>Duis mollis placerat quam, eget laoreet tellus tempor eu. Quisque dapibus in purus in
-                        dignissim.</p>
+                    <p><?php echo get_theme_mod('plutonwp_description_services') ?></p>
                     <!--Simple description for section goes here. -->
                 </div>
                 <div class="row-fluid">
@@ -92,8 +91,8 @@ get_header();
         <div class="triangle"></div>
         <div class="container">
             <div class=" title">
-                <h1>Have You Seen our Works?</h1>
-                <p>Duis mollis placerat quam, eget laoreet tellus tempor eu. Quisque dapibus in purus in dignissim.</p>
+                <h1><?php echo get_theme_mod('plutonwp_portfolio_title'); ?></h1>
+                <p><?php echo get_theme_mod('plutonwp_portfolio_description'); ?></p>
             </div>
             <ul class="nav nav-pills">
                 <li class="filter" data-filter="all">
