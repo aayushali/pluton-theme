@@ -47,7 +47,7 @@ get_header();
     </div>
     <!-- End home section -->
     <!-- Service section start -->
-    <div class="section primary-section" id="service">
+    <div class="section primary-section" id="services">
 		<?php
 		$args      = array(
 			'post_type' => 'service',
@@ -57,10 +57,10 @@ get_header();
             <div class="container">
                 <!-- Start title section -->
                 <div class="title">
-                    <h1><?php echo get_theme_mod('plutonwp_service_title'); ?>
+                    <h1><?php echo get_theme_mod( 'plutonwp_service_title' ); ?>
                     </h1>
                     <!-- Section's title goes here -->
-                    <p><?php echo get_theme_mod('plutonwp_description_services') ?></p>
+                    <p><?php echo get_theme_mod( 'plutonwp_description_services' ) ?></p>
                     <!--Simple description for section goes here. -->
                 </div>
                 <div class="row-fluid">
@@ -71,7 +71,9 @@ get_header();
                         <div class="span4">
                             <div class="centered service">
                                 <div class="circle-border zoom-in">
-                                    <img class="img-circle" src="<?php the_post_thumbnail_url(); ?>" alt="service 1">
+									<?php if ( has_post_thumbnail() ) {
+										the_post_thumbnail();
+									} ?>
                                 </div>
                                 <h3><?php the_title(); ?></h3>
                                 <p><?php echo get_the_excerpt(); ?></p>
@@ -91,8 +93,8 @@ get_header();
         <div class="triangle"></div>
         <div class="container">
             <div class=" title">
-                <h1><?php echo get_theme_mod('plutonwp_portfolio_title'); ?></h1>
-                <p><?php echo get_theme_mod('plutonwp_portfolio_description'); ?></p>
+                <h1><?php echo get_theme_mod( 'plutonwp_portfolio_title' ); ?></h1>
+                <p><?php echo get_theme_mod( 'plutonwp_portfolio_description' ); ?></p>
             </div>
             <ul class="nav nav-pills">
                 <li class="filter" data-filter="all">

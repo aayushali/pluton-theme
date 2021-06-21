@@ -125,7 +125,7 @@ function plutonwp_scripts() {
 	wp_style_add_data( 'plutonwp-style', 'rtl', 'replace' );
 	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'jquery.mixitup', get_template_directory_uri() . '/js/jquery.mixitup.js', array(), _S_VERSION, true );
-	wp_enqueue_script( 'bootstrapJs', get_template_directory_uri() . '/js/bootstrap.js', array(), _S_VERSION, true );
+	wp_enqueue_script( 'bootstrap', get_template_directory_uri() . '/js/bootstrap.js', array(), _S_VERSION, true );
 	wp_enqueue_script( 'modernizr.custom', get_template_directory_uri() . '/js/modernizr.custom.js', array(), _S_VERSION, true );
 	wp_enqueue_script( 'jquery.bxslider', get_template_directory_uri() . '/js/jquery.bxslider.js', array(), _S_VERSION, true );
 	wp_enqueue_script( 'cslider', get_template_directory_uri() . '/js/jquery.cslider.js', array(), _S_VERSION, true );
@@ -321,59 +321,48 @@ function add_service_title( $wp_customize ) {
 }
 
 add_action( 'customize_register', 'add_service_title' );
-
-
-function add_portfolio_title( $wp_customize ){
-
-	$wp_customize -> add_panel( 'plutonwp_edit_portfolio', array(
-		'title' => __( 'Edit Portfolio', 'pluton'),
-		'description' => __( 'Portfolio Title and Description Modification', 'pluton'),
-	));
-
-	$wp_customize -> add_section('plutonwp_title_portfolio', array(
-		'title' => __('Edit Portfolio Title', 'pluton'),
+function add_portfolio_title( $wp_customize ) {
+	$wp_customize->add_panel( 'plutonwp_edit_portfolio', array(
+		'title'       => __( 'Edit Portfolio', 'pluton' ),
+		'description' => __( 'Portfolio Title and Description Modification', 'pluton' ),
+	) );
+	$wp_customize->add_section( 'plutonwp_title_portfolio', array(
+		'title'    => __( 'Edit Portfolio Title', 'pluton' ),
 		'priority' => 1,
-		'panel' => 'plutonwp_edit_portfolio'
-	));
-
-	$wp_customize -> add_section('plutowp_description_portfolio', array(
-		'title' => __('Edit Portfolio Description', 'pluton'),
+		'panel'    => 'plutonwp_edit_portfolio'
+	) );
+	$wp_customize->add_section( 'plutowp_description_portfolio', array(
+		'title'    => __( 'Edit Portfolio Description', 'pluton' ),
 		'priority' => 2,
-		'panel' => 'plutonwp_edit_portfolio'
-	));
-
-	$wp_customize -> add_setting('plutonwp_portfolio_title', array(
-		'default' => __('Have You Seen our Works?', 'pluton'),
+		'panel'    => 'plutonwp_edit_portfolio'
+	) );
+	$wp_customize->add_setting( 'plutonwp_portfolio_title', array(
+		'default'           => __( 'Have You Seen our Works?', 'pluton' ),
 		'sanitize_callback' => 'sanitize_text_field',
-		'transport' => 'refresh'
-	));
-	$wp_customize -> add_setting('plutonwp_portfolio_description', array(
-		'default' => __('Duis mollis placerat quam, eget laoreet tellus tempor eu. Quisque dapibus in purus in dignissim.', 'pluton'),
+		'transport'         => 'refresh'
+	) );
+	$wp_customize->add_setting( 'plutonwp_portfolio_description', array(
+		'default'           => __( 'Duis mollis placerat quam, eget laoreet tellus tempor eu. Quisque dapibus in purus in dignissim.', 'pluton' ),
 		'sanitize_callback' => 'sanitize_text_field',
-		'transport' => 'refresh'
-	));
-
-	$wp_customize -> add_control('plutonwp_portfolio_title', array(
-		'default' => 'text',
-		'priority' => 15,
-		'section' => 'plutonwp_title_portfolio',
-		'label' => 'Title text',
+		'transport'         => 'refresh'
+	) );
+	$wp_customize->add_control( 'plutonwp_portfolio_title', array(
+		'default'     => 'text',
+		'priority'    => 15,
+		'section'     => 'plutonwp_title_portfolio',
+		'label'       => 'Title text',
 		'description' => 'Text put here will be outputted in the portfolio title'
-	));
-
-	$wp_customize -> add_control('plutonwp_portfolio_description', array(
-		'default' => 'textarea',
-		'priority' => 20,
-		'section' => 'plutowp_description_portfolio',
-		'label' => 'Description text',
-		'description'=> 'Text put here will be outputtted in the portfolio Description'
-	));
+	) );
+	$wp_customize->add_control( 'plutonwp_portfolio_description', array(
+		'default'     => 'textarea',
+		'priority'    => 20,
+		'section'     => 'plutowp_description_portfolio',
+		'label'       => 'Description text',
+		'description' => 'Text put here will be outputtted in the portfolio Description'
+	) );
 }
 
-add_action('customize_register', 'add_portfolio_title');
-
-
-
+add_action( 'customize_register', 'add_portfolio_title' );
 function portfolio_post_type() {
 	$labels = array(
 		'name'                  => _x( 'Portfolios', 'Post type general name', 'textdomain' ),
@@ -496,7 +485,12 @@ function create_identity_taxonomy() {
 }
 
 add_action( 'init', 'create_identity_taxonomy', 999 );
+function update_menu_link( $items ) {
+	foreach ( $items as $item ) {
+		$item->url = '#' . strtolower( $item->title );
+	}
 
+	return $items;
+}
 
-
-
+add_filter( 'wp_nav_menu_objects', 'update_menu_link', 10, 2 );
