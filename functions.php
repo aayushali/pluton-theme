@@ -113,15 +113,15 @@ add_action( 'widgets_init', 'plutonwp_widgets_init' );
  * Enqueue scripts and styles.
  * */
 function plutonwp_scripts() {
+	wp_enqueue_style( 'animate', get_template_directory_uri() . '/css/animate.css', array(), _S_VERSION );
 	wp_enqueue_style( 'plutonwp-style', get_stylesheet_uri(), array(), _S_VERSION );
 	wp_enqueue_style( 'bootstrap', get_template_directory_uri() . '/css/bootstrap.css', array(), _S_VERSION );
 	wp_enqueue_style( 'bootstrap-responsive', get_template_directory_uri() . '/css/bootstrap-responsive.css', array(), _S_VERSION );
-	wp_enqueue_style( 'style', get_template_directory_uri() . '/css/style.css', array(), _S_VERSION );
 	wp_enqueue_style( 'pluton-ie7', get_template_directory_uri() . '/css/pluton-ie7.css', array(), _S_VERSION );
 	wp_enqueue_style( 'pluton', get_template_directory_uri() . '/css/pluton.css', array(), _S_VERSION );
 	wp_enqueue_style( 'jquery.cslider', get_template_directory_uri() . '/css/jquery.cslider.css', array(), _S_VERSION );
 	wp_enqueue_style( 'jquery.bxslider', get_template_directory_uri() . '/css/jquery.bxslider.css', array(), _S_VERSION );
-	wp_enqueue_style( 'animate', get_template_directory_uri() . '/css/animate.css', array(), _S_VERSION );
+	wp_enqueue_style( 'style', get_template_directory_uri() . '/css/style.css', array(), _S_VERSION );
 	wp_style_add_data( 'plutonwp-style', 'rtl', 'replace' );
 	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'jquery.mixitup', get_template_directory_uri() . '/js/jquery.mixitup.js', array(), _S_VERSION, true );
@@ -247,8 +247,57 @@ function wp_services_post_type() {
 	register_post_type( 'service', $args );
 }
 
+
+function wp_teams_post_type() {
+	$labels = array(
+		'name'                  => _x( 'teams', 'Post type general name', 'textdomain' ),
+		'singular_name'         => _x( 'team', 'Post type singular name', 'textdomain' ),
+		'menu_name'             => _x( 'Team', 'Admin Menu text', 'textdomain' ),
+		'add_new'               => __( 'Add new', 'textdomain' ),
+		'add_new_item'          => __( 'Add New team', 'textdomain' ),
+		'new_item'              => __( 'New team', 'textdomain' ),
+		'edit_item'             => __( 'Edit team', 'textdomain' ),
+		'view_item'             => __( 'View team', 'textdomain' ),
+		'all_items'             => __( 'All teams', 'textdomain' ),
+		'search_items'          => __( 'Search teams', 'textdomain' ),
+		'parent_item_colon'     => __( 'Parent teams:', 'textdomain' ),
+		'not_found'             => __( 'No teams found.', 'textdomain' ),
+		'not_found_in_trash'    => __( 'No teams found in Trash.', 'textdomain' ),
+		'featured_image'        => _x( 'teams Cover Image', 'Overrides the “Featured Image” phrase for this post type. Added in 4.3', 'textdomain' ),
+		'set_featured_image'    => _x( 'Set cover image', 'Overrides the “Set featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
+		'remove_featured_image' => _x( 'Remove cover image', 'Overrides the “Remove featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
+		'use_featured_image'    => _x( 'Use as cover image', 'Overrides the “Use as featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
+		'archives'              => _x( 'team archives', 'The post type archive label used in nav menus. Default “Post Archives”. Added in 4.4', 'textdomain' ),
+		'insert_into_item'      => _x( 'Insertt into team', 'Overrides the “Insert into post”/”Insert into page” phrase (used when inserting media into a post). Added in 4.4', 'textdomain' ),
+		'uploaded_to_this_item' => _x( 'Uploaded to this team', 'Overrides the “Uploaded to this post”/”Uploaded to this page” phrase (used when viewing media attached to a post). Added in 4.4', 'textdomain' ),
+		'filter_items_list'     => _x( 'Filter teams list', 'Screen reader text for the filter links heading on the post type listing screen. Default “Filter posts list”/”Filter pages list”. Added in 4.4', 'textdomain' ),
+		'items_list_navigation' => _x( 'teams list navigation', 'Screen reader text for the pagination heading on the post type listing screen. Default “Posts list navigation”/”Pages list navigation”. Added in 4.4', 'textdomain' ),
+		'items_list'            => _x( 'teams list', 'Screen reader text for the items list heading on the post type listing screen. Default “Posts list”/”Pages list”. Added in 4.4', 'textdomain' ),
+	);
+	$args   = array(
+		'labels'            => $labels,
+		'public'            => true,
+		'publicly_querable' => true,
+		'show_ui'           => true,
+		'show_in_menu'      => true,
+		'query_bar'         => true,
+		'rewrite'           => array( 'slug' => 'team' ),
+		'capability_type'   => 'post',
+		'has_archive'       => true,
+		'hierarchical'      => true,
+		'menu_position'     => 5,
+		'supports'          => array( 'title', 'thumbnail', 'editor' ),
+	);
+	register_post_type( 'team', $args );
+}
+
+//registering post types
+
+
+add_action( 'init', 'wp_teams_post_type');
 add_action( 'init', 'wp_services_post_type' );
 add_action( 'init', 'wp_slider_post_type' );
+
 function your_php_code( $wp_customize ) {
 	// Theme Options Panel
 	$wp_customize->add_panel( 'nd_dosth_theme_options', array(
@@ -279,6 +328,7 @@ function your_php_code( $wp_customize ) {
 }
 
 add_action( 'customize_register', 'your_php_code' );
+// Customizer for Services
 function add_service_title( $wp_customize ) {
 	$wp_customize->add_panel( 'plutonwp_edit_services', array(
 		'title'       => __( 'Edit Services', 'pluton' ),
@@ -321,6 +371,7 @@ function add_service_title( $wp_customize ) {
 }
 
 add_action( 'customize_register', 'add_service_title' );
+// Customizer for portfolio
 function add_portfolio_title( $wp_customize ) {
 	$wp_customize->add_panel( 'plutonwp_edit_portfolio', array(
 		'title'       => __( 'Edit Portfolio', 'pluton' ),
@@ -363,6 +414,83 @@ function add_portfolio_title( $wp_customize ) {
 }
 
 add_action( 'customize_register', 'add_portfolio_title' );
+// Customizer for About
+function add_about_title( $wp_customize ) {
+	$wp_customize->add_panel( 'plutonwp_edit_about', array(
+		'title'       => __( 'Edit About', 'pluton ' ),
+		'description' => __( 'About title and description Modification', 'pluton' ),
+	) );
+	$wp_customize->add_section( 'plutonwp_title_about', array(
+		'title'    => __( 'Page Title', 'pluton' ),
+		'priority' => 1,
+		'panel'    => 'plutonwp_edit_about',
+	) );
+	$wp_customize->add_section( 'plutonwp_description_about', array(
+		'title'    => __( 'Description', 'pluton' ),
+		'priority' => 2,
+		'panel'    => 'plutonwp_edit_about'
+	) );
+	$wp_customize->add_section( 'plutonwp_about_text', array(
+		'title'    => 'About Heading',
+		'priority' => 3,
+		'panel'    => 'plutonwp_edit_about'
+	) );
+	$wp_customize->add_section( 'plutonwp_about_desc', array(
+		'title'    => 'Description',
+		'priority' => 4,
+		'panel'    => 'plutonwp_edit_about'
+	) );
+	$wp_customize->add_setting( 'plutonwp_title_text', array(
+		'default'           => __( 'Who We Are?', 'pluton' ),
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport'         => 'refresh'
+	) );
+	$wp_customize->add_setting( 'plutonwp_about_heading', array(
+		'default'           => __( 'About Us', 'pluton' ),
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport'         => 'refresh'
+	) );
+	$wp_customize->add_setting( 'plutonwp_about_desc', array(
+		'default'           => __( 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
+
+', 'pluton' ),
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport'         => 'refresh'
+	) );
+	$wp_customize->add_setting( 'plutonwp_desc_text', array(
+		'default'           => __( 'Duis mollis placerat quam, eget laoreet tellus tempor eu. Quisque dapibus in purus in dignissim.', 'plutonwp' ),
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport'         => 'refresh'
+	) );
+	$wp_customize->add_control( 'plutonwp_title_text', array(
+		'default'     => 'text',
+		'priority'    => 15,
+		'section'     => 'plutonwp_title_about',
+		'label'       => 'About text',
+		'description' => 'Text put here will be outputted in the About title'
+	) );
+	$wp_customize->add_control( 'plutonwp_desc_text', array(
+		'default'     => 'text',
+		'priority'    => 20,
+		'section'     => 'plutonwp_description_about',
+		'label'       => 'Description Text',
+		'description' => 'Text put here will be outputted inte About Description'
+	) );
+	$wp_customize->add_control( 'plutonwp_about_heading', array(
+		'default'  => 'text',
+		'priority' => 20,
+		'section'  => 'plutonwp_about_text',
+		'label'    => 'Heading Text'
+	) );
+	$wp_customize->add_control( 'plutonwp_about_desc', array(
+		'default'  => 'text',
+		'priority' => 25,
+		'section'  => 'plutonwp_about_desc',
+		'label'    => 'Description'
+	) );
+}
+
+add_action( 'customize_register', 'add_about_title' );
 function portfolio_post_type() {
 	$labels = array(
 		'name'                  => _x( 'Portfolios', 'Post type general name', 'textdomain' ),
@@ -494,3 +622,5 @@ function update_menu_link( $items ) {
 }
 
 add_filter( 'wp_nav_menu_objects', 'update_menu_link', 10, 2 );
+
+

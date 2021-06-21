@@ -201,4 +201,100 @@ get_header();
         </div>
     </div>
     <!-- Portfolio section end -->
+    <!-- About us section start -->
+    <div class="section primary-section" id="about">
+        <div class="triangle"></div>
+        <div class="container">
+            <div class="title">
+                <h1><?php echo get_theme_mod( 'plutonwp_title_text' ); ?></h1>
+                <p><?php echo get_theme_mod( 'plutonwp_desc_text' ); ?>
+                </p>
+            </div>
+			<?php
+			$args      = array(
+				'post_type' => 'team',
+			);
+			$the_query = new WP_Query( $args );
+			if ( $the_query->have_posts() ):
+				?>
+                <div class="row-fluid team">
+					<?php while ( $the_query->have_posts() ): $the_query->the_post(); ?>
+                        <div class="span4" id="first-person">
+                            <div class="thumbnail">
+								<?php if ( has_post_thumbnail() ) {
+									the_post_thumbnail();
+								} ?>
+                                <h3><?php the_title(); ?></h3>
+                                <ul class="social">
+                                    <li>
+                                        <a href="">
+                                            <span class="icon-facebook-circled"></span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            <span class="icon-twitter-circled"></span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            <span class="icon-linkedin-circled"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="mask">
+                                    <p>
+										<?php the_content(); ?>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+					<?php endwhile; ?>
+                </div>
+			<?php endif;
+			wp_reset_postdata(); ?>
+            <div class="about-text centered">
+                <h3><?php echo get_theme_mod( 'plutonwp_about_heading' ); ?></h3>
+                <p><?php echo get_theme_mod( 'plutonwp_about_desc' ); ?>
+                </p>
+            </div>
+            <h3>Skills</h3>
+            <div class="row-fluid">
+                <div class="span6">
+                    <ul class="skills">
+                        <li>
+                            <span class="bar" data-width="80%"></span>
+                            <h3>Graphic Design</h3>
+                        </li>
+                        <li>
+                            <span class="bar" data-width="95%"></span>
+                            <h3>Html & Css</h3>
+                        </li>
+                        <li>
+                            <span class="bar" data-width="68%"></span>
+                            <h3>jQuery</h3>
+                        </li>
+                        <li>
+                            <span class="bar" data-width="70%"></span>
+                            <h3>Wordpress</h3>
+                        </li>
+                    </ul>
+                </div>
+                <div class="span6">
+                    <div class="highlighted-box center">
+                        <h1>We're Hiring</h1>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed
+                            diam nonummy nibh euismod tincidunt ut laoreet dolore magna
+                            aliquam erat volutpat. Ut wisi enim ad minim veniam, ullamcorper
+                            suscipit lobortis nisl ut aliquip consequat. I learned that we
+                            can do anything, but we can't do everything...
+                        </p>
+                        <button class="button button-sp">Join Us</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About us section end -->
 <?php get_footer(); ?>
