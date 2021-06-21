@@ -428,8 +428,8 @@ function create_web_taxonomy() {
 
 function create_photo_taxonomy() {
 	$labels = array(
-		'name' => _x( 'photo', 'taxonomy general name' ),
-		'singular_name' => _x( 'photo', 'taxonomy singular name' ),
+		'name' => _x( 'Photo', 'taxonomy general name' ),
+		'singular_name' => _x( 'Photo', 'taxonomy singular name' ),
 		'search_items' =>  __( 'Search photos' ),
 		'all_items' => __( 'All photos' ),
 		'parent_item' => __( 'Parent photo' ),
@@ -455,8 +455,8 @@ add_action('init','create_photo_taxonomy', 999);
 
 function create_identity_taxonomy() {
 	$labels = array(
-		'name' => _x( 'identity', 'taxonomy general name' ),
-		'singular_name' => _x( 'identity', 'taxonomy singular name' ),
+		'name' => _x( 'Identity', 'taxonomy general name' ),
+		'singular_name' => _x( 'Identity', 'taxonomy singular name' ),
 		'search_items' =>  __( 'Search identitys' ),
 		'all_items' => __( 'All identitys' ),
 		'parent_item' => __( 'Parent identity' ),
