@@ -414,7 +414,9 @@ function add_portfolio_title( $wp_customize ) {
 }
 
 add_action( 'customize_register', 'add_portfolio_title' );
+
 // Customizer for About
+
 function add_about_title( $wp_customize ) {
 	$wp_customize->add_panel( 'plutonwp_edit_about', array(
 		'title'       => __( 'Edit About', 'pluton ' ),
@@ -428,7 +430,8 @@ function add_about_title( $wp_customize ) {
 	$wp_customize->add_section( 'plutonwp_description_about', array(
 		'title'    => __( 'Description', 'pluton' ),
 		'priority' => 2,
-		'panel'    => 'plutonwp_edit_about'
+		'panel'    => 'plutonwp_edit_about',
+		'section' => 'plutonwp_title_about'
 	) );
 	$wp_customize->add_section( 'plutonwp_about_text', array(
 		'title'    => 'About Heading',
@@ -438,7 +441,8 @@ function add_about_title( $wp_customize ) {
 	$wp_customize->add_section( 'plutonwp_about_desc', array(
 		'title'    => 'Description',
 		'priority' => 4,
-		'panel'    => 'plutonwp_edit_about'
+		'panel'    => 'plutonwp_edit_about',
+		'section' => 'plutonwp_about_text'
 	) );
 	$wp_customize->add_setting( 'plutonwp_title_text', array(
 		'default'           => __( 'Who We Are?', 'pluton' ),
@@ -472,7 +476,7 @@ function add_about_title( $wp_customize ) {
 	$wp_customize->add_control( 'plutonwp_desc_text', array(
 		'default'     => 'text',
 		'priority'    => 20,
-		'section'     => 'plutonwp_description_about',
+		'section'     => 'plutonwp_title_about',
 		'label'       => 'Description Text',
 		'description' => 'Text put here will be outputted inte About Description'
 	) );
@@ -485,10 +489,53 @@ function add_about_title( $wp_customize ) {
 	$wp_customize->add_control( 'plutonwp_about_desc', array(
 		'default'  => 'text',
 		'priority' => 25,
-		'section'  => 'plutonwp_about_desc',
+		'section'  => 'plutonwp_about_text',
 		'label'    => 'Description'
 	) );
+
+	$wp_customize -> add_section('hiring_box',array(
+		'title' => 'Hiring',
+		'priority' => 4,
+		'panel' => 'plutonwp_edit_about',
+	));
+	$wp_customize -> add_setting('hiring_heading',array(
+		'default' => __("We're Hiring..! "),
+		'sanitize_callback'=>'sanitize_text_field',
+		'transport' => 'refresh'
+	));
+	$wp_customize -> add_setting('hiring_description', array(
+		'default' => __("Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt 
+		ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, ullamcorper suscipit lobortis nisl 
+		ut aliquip consequat. I learned that we can do anything, but we can't do everything..."),
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport' => 'refresh'
+	));
+	$wp_customize -> add_setting('hiring_join_button',array(
+		'default' => __('Join US'),
+		'sanitize_callback'=>'sanitize_text_field',
+		'transport' => 'refresh',
+	));
+
+	$wp_customize -> add_control('hiring_heading',array(
+		'default'=>'text',
+		'priority'=>15,
+		'section'=>'hiring_box',
+		'label' => 'Heading Text',
+	));
+	$wp_customize -> add_control('hiring_description', array(
+		'default' => 'text',
+		'priority' => 20,
+		'section' => 'hiring_box',
+		'label' => 'Description'
+	));
+	$wp_customize -> add_control('hiring_join_button', array(
+		'default' => 'text',
+		'priority' => 25,
+		'section' => 'hiring_box',
+		'label' => 'Button Text'
+	));
 }
+
 
 add_action( 'customize_register', 'add_about_title' );
 function portfolio_post_type() {

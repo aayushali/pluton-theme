@@ -282,15 +282,11 @@ get_header();
                 </div>
                 <div class="span6">
                     <div class="highlighted-box center">
-                        <h1>We're Hiring</h1>
+                        <h1><?php echo get_theme_mod('hiring_heading'); ?></h1>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed
-                            diam nonummy nibh euismod tincidunt ut laoreet dolore magna
-                            aliquam erat volutpat. Ut wisi enim ad minim veniam, ullamcorper
-                            suscipit lobortis nisl ut aliquip consequat. I learned that we
-                            can do anything, but we can't do everything...
+                            <?php echo get_theme_mod('hiring_description'); ?>
                         </p>
-                        <button class="button button-sp">Join Us</button>
+                        <button class="button button-sp"><?php echo get_theme_mod('hiring_join_button'); ?></button>
                     </div>
                 </div>
             </div>
