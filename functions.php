@@ -121,7 +121,7 @@ function plutonwp_scripts() {
 	wp_enqueue_style( 'pluton', get_template_directory_uri() . '/css/pluton.css', array(), _S_VERSION );
 	wp_enqueue_style( 'jquery.cslider', get_template_directory_uri() . '/css/jquery.cslider.css', array(), _S_VERSION );
 	wp_enqueue_style( 'jquery.bxslider', get_template_directory_uri() . '/css/jquery.bxslider.css', array(), _S_VERSION );
-	wp_enqueue_style( 'style', get_template_directory_uri() . '/css/style.css', array(), _S_VERSION );
+	wp_enqueue_style( 'styles', get_template_directory_uri() . '/css/style.css', array(), _S_VERSION );
 	wp_style_add_data( 'plutonwp-style', 'rtl', 'replace' );
 	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'jquery.mixitup', get_template_directory_uri() . '/js/jquery.mixitup.js', array(), _S_VERSION, true );
@@ -247,7 +247,6 @@ function wp_services_post_type() {
 	register_post_type( 'service', $args );
 }
 
-
 function wp_teams_post_type() {
 	$labels = array(
 		'name'                  => _x( 'teams', 'Post type general name', 'textdomain' ),
@@ -292,12 +291,9 @@ function wp_teams_post_type() {
 }
 
 //registering post types
-
-
-add_action( 'init', 'wp_teams_post_type');
+add_action( 'init', 'wp_teams_post_type' );
 add_action( 'init', 'wp_services_post_type' );
 add_action( 'init', 'wp_slider_post_type' );
-
 function your_php_code( $wp_customize ) {
 	// Theme Options Panel
 	$wp_customize->add_panel( 'nd_dosth_theme_options', array(
@@ -414,9 +410,7 @@ function add_portfolio_title( $wp_customize ) {
 }
 
 add_action( 'customize_register', 'add_portfolio_title' );
-
 // Customizer for About
-
 function add_about_title( $wp_customize ) {
 	$wp_customize->add_panel( 'plutonwp_edit_about', array(
 		'title'       => __( 'Edit About', 'pluton ' ),
@@ -431,7 +425,7 @@ function add_about_title( $wp_customize ) {
 		'title'    => __( 'Description', 'pluton' ),
 		'priority' => 2,
 		'panel'    => 'plutonwp_edit_about',
-		'section' => 'plutonwp_title_about'
+		'section'  => 'plutonwp_title_about'
 	) );
 	$wp_customize->add_section( 'plutonwp_about_text', array(
 		'title'    => 'About Heading',
@@ -442,7 +436,7 @@ function add_about_title( $wp_customize ) {
 		'title'    => 'Description',
 		'priority' => 4,
 		'panel'    => 'plutonwp_edit_about',
-		'section' => 'plutonwp_about_text'
+		'section'  => 'plutonwp_about_text'
 	) );
 	$wp_customize->add_setting( 'plutonwp_title_text', array(
 		'default'           => __( 'Who We Are?', 'pluton' ),
@@ -492,50 +486,47 @@ function add_about_title( $wp_customize ) {
 		'section'  => 'plutonwp_about_text',
 		'label'    => 'Description'
 	) );
-
-	$wp_customize -> add_section('hiring_box',array(
-		'title' => 'Hiring',
+	$wp_customize->add_section( 'hiring_box', array(
+		'title'    => 'Hiring',
 		'priority' => 4,
-		'panel' => 'plutonwp_edit_about',
-	));
-	$wp_customize -> add_setting('hiring_heading',array(
-		'default' => __("We're Hiring..! "),
-		'sanitize_callback'=>'sanitize_text_field',
-		'transport' => 'refresh'
-	));
-	$wp_customize -> add_setting('hiring_description', array(
-		'default' => __("Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt 
-		ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, ullamcorper suscipit lobortis nisl 
-		ut aliquip consequat. I learned that we can do anything, but we can't do everything..."),
+		'panel'    => 'plutonwp_edit_about',
+	) );
+	$wp_customize->add_setting( 'hiring_heading', array(
+		'default'           => __( "We're Hiring..! " ),
 		'sanitize_callback' => 'sanitize_text_field',
-		'transport' => 'refresh'
-	));
-	$wp_customize -> add_setting('hiring_join_button',array(
-		'default' => __('Join US'),
-		'sanitize_callback'=>'sanitize_text_field',
-		'transport' => 'refresh',
-	));
-
-	$wp_customize -> add_control('hiring_heading',array(
-		'default'=>'text',
-		'priority'=>15,
-		'section'=>'hiring_box',
-		'label' => 'Heading Text',
-	));
-	$wp_customize -> add_control('hiring_description', array(
-		'default' => 'text',
+		'transport'         => 'refresh'
+	) );
+	$wp_customize->add_setting( 'hiring_description', array(
+		'default'           => __( "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt 
+		ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, ullamcorper suscipit lobortis nisl 
+		ut aliquip consequat. I learned that we can do anything, but we can't do everything..." ),
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport'         => 'refresh'
+	) );
+	$wp_customize->add_setting( 'hiring_join_button', array(
+		'default'           => __( 'Join US' ),
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport'         => 'refresh',
+	) );
+	$wp_customize->add_control( 'hiring_heading', array(
+		'default'  => 'text',
+		'priority' => 15,
+		'section'  => 'hiring_box',
+		'label'    => 'Heading Text',
+	) );
+	$wp_customize->add_control( 'hiring_description', array(
+		'default'  => 'text',
 		'priority' => 20,
-		'section' => 'hiring_box',
-		'label' => 'Description'
-	));
-	$wp_customize -> add_control('hiring_join_button', array(
-		'default' => 'text',
+		'section'  => 'hiring_box',
+		'label'    => 'Description'
+	) );
+	$wp_customize->add_control( 'hiring_join_button', array(
+		'default'  => 'text',
 		'priority' => 25,
-		'section' => 'hiring_box',
-		'label' => 'Button Text'
-	));
+		'section'  => 'hiring_box',
+		'label'    => 'Button Text'
+	) );
 }
-
 
 add_action( 'customize_register', 'add_about_title' );
 function portfolio_post_type() {
@@ -582,6 +573,51 @@ function portfolio_post_type() {
 }
 
 add_action( 'init', 'portfolio_post_type' );
+// custom posttype for clients
+function client_post_type() {
+	$labels = array(
+		'name'                  => _x( 'clients', 'Post type general name', 'textdomain' ),
+		'singular_name'         => _x( 'client', 'Post type singular name', 'textdomain' ),
+		'menu_name'             => _x( 'Clients', 'Admin Menu text', 'textdomain' ),
+		'add_new'               => __( 'Add new', 'textdomain' ),
+		'add_new_item'          => __( 'Add New client', 'textdomain' ),
+		'new_item'              => __( 'New client', 'textdomain' ),
+		'edit_item'             => __( 'Edit client', 'textdomain' ),
+		'view_item'             => __( 'View client', 'textdomain' ),
+		'all_items'             => __( 'All clients', 'textdomain' ),
+		'search_items'          => __( 'Search clients', 'textdomain' ),
+		'parent_item_colon'     => __( 'Parent clients:', 'textdomain' ),
+		'not_found'             => __( 'No clients found.', 'textdomain' ),
+		'not_found_in_trash'    => __( 'No clients found in Trash.', 'textdomain' ),
+		'featured_image'        => _x( 'clients Cover Image', 'Overrides the “Featured Image” phrase for this post type. Added in 4.3', 'textdomain' ),
+		'set_featured_image'    => _x( 'Set cover image', 'Overrides the “Set featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
+		'remove_featured_image' => _x( 'Remove cover image', 'Overrides the “Remove featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
+		'use_featured_image'    => _x( 'Use as cover image', 'Overrides the “Use as featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
+		'archives'              => _x( 'client archives', 'The post type archive label used in nav menus. Default “Post Archives”. Added in 4.4', 'textdomain' ),
+		'insert_into_item'      => _x( 'Insertt into client', 'Overrides the “Insert into post”/”Insert into page” phrase (used when inserting media into a post). Added in 4.4', 'textdomain' ),
+		'uploaded_to_this_item' => _x( 'Uploaded to this client', 'Overrides the “Uploaded to this post”/”Uploaded to this page” phrase (used when viewing media attached to a post). Added in 4.4', 'textdomain' ),
+		'filter_items_list'     => _x( 'Filter clients list', 'Screen reader text for the filter links heading on the post type listing screen. Default “Filter posts list”/”Filter pages list”. Added in 4.4', 'textdomain' ),
+		'items_list_navigation' => _x( 'clients list navigation', 'Screen reader text for the pagination heading on the post type listing screen. Default “Posts list navigation”/”Pages list navigation”. Added in 4.4', 'textdomain' ),
+		'items_list'            => _x( 'clients list', 'Screen reader text for the items list heading on the post type listing screen. Default “Posts list”/”Pages list”. Added in 4.4', 'textdomain' ),
+	);
+	$args   = array(
+		'labels'            => $labels,
+		'public'            => true,
+		'publicly_querable' => true,
+		'show_ui'           => true,
+		'show_in_menu'      => true,
+		'query_bar'         => true,
+		'rewrite'           => array( 'slug' => 'client' ),
+		'capability_type'   => 'post',
+		'has_archive'       => true,
+		'hierarchical'      => true,
+		'menu_position'     => 5,
+		'supports'          => array( 'title', 'thumbnail', 'editor', 'excerpt' ),
+	);
+	register_post_type( 'client', $args );
+}
+
+add_action( 'init', 'client_post_type' );
 //hook into the init action and call create_book_taxonomies when it fires
 add_action( 'init', 'create_web_taxonomy', 999 );
 //create a custom taxonomy name it topics for your posts
@@ -669,5 +705,7 @@ function update_menu_link( $items ) {
 }
 
 add_filter( 'wp_nav_menu_objects', 'update_menu_link', 10, 2 );
+
+
 
 

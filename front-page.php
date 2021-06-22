@@ -282,15 +282,144 @@ get_header();
                 </div>
                 <div class="span6">
                     <div class="highlighted-box center">
-                        <h1><?php echo get_theme_mod('hiring_heading'); ?></h1>
+                        <h1><?php echo get_theme_mod( 'hiring_heading' ); ?></h1>
                         <p>
-                            <?php echo get_theme_mod('hiring_description'); ?>
+							<?php echo get_theme_mod( 'hiring_description' ); ?>
                         </p>
-                        <button class="button button-sp"><?php echo get_theme_mod('hiring_join_button'); ?></button>
+                        <button class="button button-sp"><?php echo get_theme_mod( 'hiring_join_button' ); ?></button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- About us section end -->
+    <div class="section secondary-section">
+        <div class="triangle"></div>
+        <div class="container centered">
+            <p class="large-text">
+                Elegance is not the abundance of simplicity. It is the absence of
+                complexity.
+            </p>
+            <a href="#" class="button">Purshase now</a>
+        </div>
+    </div>
+    <!-- Client section start -->
+    <div id="clients">
+        <div class="section primary-section">
+            <div class="triangle"></div>
+            <div class="container">
+                <div class="title">
+                    <h1>What Client Say?</h1>
+                    <p>
+                        Duis mollis placerat quam, eget laoreet tellus tempor eu. Quisque
+                        dapibus in purus in dignissim.
+                    </p>
+                </div>
+				<?php
+				$args      = array(
+					'post_type' => 'client',
+				);
+				$the_query = new WP_Query( $args );
+				if ( $the_query->have_posts() ):
+					?>
+                    <div class="row">
+						<?php while ( $the_query->have_posts() ):$the_query->the_post(); ?>
+                            <div class="span4">
+                                <div class="testimonial">
+									<?php the_content(); ?>
+                                    <div class="whopic">
+                                        <div class="arrow"></div>
+										<?php if ( has_post_thumbnail() ) {
+											the_post_thumbnail();
+										} ?>
+                                        <strong><?php the_title(); ?>
+                                            <small>Client</small>
+                                        </strong>
+                                    </div>
+                                </div>
+                            </div>
+						<?php endwhile; ?>
+                    </div>
+				<?php endif;
+				wp_reset_postdata(); ?>
+                <p class="testimonial-text">
+                    "Perfection is Achieved Not When There Is Nothing More to Add, But
+                    When There Is Nothing Left to Take Away"
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="section third-section">
+        <div class="container centered">
+            <div class="sub-section">
+                <div class="title clearfix">
+                    <div class="pull-left">
+                        <h3>Our Clients</h3>
+                    </div>
+                    <ul class="client-nav pull-right">
+                        <li id="client-prev"></li>
+                        <li id="client-next"></li>
+                    </ul>
+                </div>
+                <ul class="row client-slider" id="clint-slider">
+                    <li>
+                        <a href="">
+                            <img
+                                    src="images/clients/ClientLogo01.png"
+                                    alt="client logo 1"
+                            />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img
+                                    src="images/clients/ClientLogo02.png"
+                                    alt="client logo 2"
+                            />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img
+                                    src="images/clients/ClientLogo03.png"
+                                    alt="client logo 3"
+                            />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img
+                                    src="images/clients/ClientLogo04.png"
+                                    alt="client logo 4"
+                            />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img
+                                    src="images/clients/ClientLogo05.png"
+                                    alt="client logo 5"
+                            />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img
+                                    src="images/clients/ClientLogo02.png"
+                                    alt="client logo 6"
+                            />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img
+                                    src="images/clients/ClientLogo04.png"
+                                    alt="client logo 7"
+                            />
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 <?php get_footer(); ?>
