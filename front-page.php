@@ -297,10 +297,9 @@ get_header();
         <div class="triangle"></div>
         <div class="container centered">
             <p class="large-text">
-                Elegance is not the abundance of simplicity. It is the absence of
-                complexity.
+                <?php echo get_theme_mod('edit_quote'); ?>
             </p>
-            <a href="#" class="button">Purshase now</a>
+            <a href="#" class="button"><?php echo get_theme_mod('edit_button'); ?></a>
         </div>
     </div>
     <!-- Client section start -->
@@ -309,10 +308,9 @@ get_header();
             <div class="triangle"></div>
             <div class="container">
                 <div class="title">
-                    <h1>What Client Say?</h1>
+                    <h1><?php echo get_theme_mod('edit_client_title'); ?></h1>
                     <p>
-                        Duis mollis placerat quam, eget laoreet tellus tempor eu. Quisque
-                        dapibus in purus in dignissim.
+	                    <?php echo get_theme_mod('edit_client_desc'); ?>
                     </p>
                 </div>
 				<?php
@@ -343,9 +341,7 @@ get_header();
 				<?php endif;
 				wp_reset_postdata(); ?>
                 <p class="testimonial-text">
-                    "Perfection is Achieved Not When There Is Nothing More to Add, But
-                    When There Is Nothing Left to Take Away"
-                </p>
+	                <?php echo get_theme_mod('edit_client_quote'); ?></p>
             </div>
         </div>
     </div>

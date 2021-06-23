@@ -161,6 +161,7 @@ require get_template_directory() . '/inc/customizer.php';
 if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
+//  registering post types
 function wp_slider_post_type() {
 	$labels = array(
 		'name'                  => _x( 'sliders', 'Post type general name', 'textdomain' ),
@@ -290,40 +291,155 @@ function wp_teams_post_type() {
 	register_post_type( 'team', $args );
 }
 
-//registering post types
+function portfolio_post_type() {
+	$labels = array(
+		'name'                  => _x( 'Portfolios', 'Post type general name', 'textdomain' ),
+		'singular_name'         => _x( 'Portfolio', 'Post type singular name', 'textdomain' ),
+		'menu_name'             => _x( 'Portfolio', 'Admin Menu text', 'textdomain' ),
+		'add_new'               => __( 'Add new', 'textdomain' ),
+		'add_new_item'          => __( 'Add New portfolio', 'textdomain' ),
+		'new_item'              => __( 'New portfolio', 'textdomain' ),
+		'edit_item'             => __( 'Edit portfolio', 'textdomain' ),
+		'view_item'             => __( 'View portfolio', 'textdomain' ),
+		'all_items'             => __( 'All portfolios', 'textdomain' ),
+		'search_items'          => __( 'Search portfolios', 'textdomain' ),
+		'parent_item_colon'     => __( 'Parent portfolios:', 'textdomain' ),
+		'not_found'             => __( 'No portfolios found.', 'textdomain' ),
+		'not_found_in_trash'    => __( 'No portfolios found in Trash.', 'textdomain' ),
+		'featured_image'        => _x( 'portfolios Cover Image', 'Overrides the “Featured Image” phrase for this post type. Added in 4.3', 'textdomain' ),
+		'set_featured_image'    => _x( 'Set cover image', 'Overrides the “Set featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
+		'remove_featured_image' => _x( 'Remove cover image', 'Overrides the “Remove featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
+		'use_featured_image'    => _x( 'Use as cover image', 'Overrides the “Use as featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
+		'archives'              => _x( 'portfolio archives', 'The post type archive label used in nav menus. Default “Post Archives”. Added in 4.4', 'textdomain' ),
+		'insert_into_item'      => _x( 'Insertt into portfolio', 'Overrides the “Insert into post”/”Insert into page” phrase (used when inserting media into a post). Added in 4.4', 'textdomain' ),
+		'uploaded_to_this_item' => _x( 'Uploaded to this portfolio', 'Overrides the “Uploaded to this post”/”Uploaded to this page” phrase (used when viewing media attached to a post). Added in 4.4', 'textdomain' ),
+		'filter_items_list'     => _x( 'Filter portfolios list', 'Screen reader text for the filter links heading on the post type listing screen. Default “Filter posts list”/”Filter pages list”. Added in 4.4', 'textdomain' ),
+		'items_list_navigation' => _x( 'portfolios list navigation', 'Screen reader text for the pagination heading on the post type listing screen. Default “Posts list navigation”/”Pages list navigation”. Added in 4.4', 'textdomain' ),
+		'items_list'            => _x( 'portfolios list', 'Screen reader text for the items list heading on the post type listing screen. Default “Posts list”/”Pages list”. Added in 4.4', 'textdomain' ),
+	);
+	$args   = array(
+		'labels'            => $labels,
+		'public'            => true,
+		'publicly_querable' => true,
+		'show_ui'           => true,
+		'show_in_menu'      => true,
+		'query_bar'         => true,
+		'rewrite'           => array( 'slug' => 'portfolio' ),
+		'capability_type'   => 'post',
+		'has_archive'       => true,
+		'hierarchical'      => true,
+		'menu_position'     => 5,
+		'supports'          => array( 'title', 'thumbnail', 'editor', 'excerpt' ),
+	);
+	register_post_type( 'portfolio', $args );
+}
+
+function client_post_type() {
+	$labels = array(
+		'name'                  => _x( 'clients', 'Post type general name', 'textdomain' ),
+		'singular_name'         => _x( 'client', 'Post type singular name', 'textdomain' ),
+		'menu_name'             => _x( 'Clients', 'Admin Menu text', 'textdomain' ),
+		'add_new'               => __( 'Add new', 'textdomain' ),
+		'add_new_item'          => __( 'Add New client', 'textdomain' ),
+		'new_item'              => __( 'New client', 'textdomain' ),
+		'edit_item'             => __( 'Edit client', 'textdomain' ),
+		'view_item'             => __( 'View client', 'textdomain' ),
+		'all_items'             => __( 'All clients', 'textdomain' ),
+		'search_items'          => __( 'Search clients', 'textdomain' ),
+		'parent_item_colon'     => __( 'Parent clients:', 'textdomain' ),
+		'not_found'             => __( 'No clients found.', 'textdomain' ),
+		'not_found_in_trash'    => __( 'No clients found in Trash.', 'textdomain' ),
+		'featured_image'        => _x( 'clients Cover Image', 'Overrides the “Featured Image” phrase for this post type. Added in 4.3', 'textdomain' ),
+		'set_featured_image'    => _x( 'Set cover image', 'Overrides the “Set featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
+		'remove_featured_image' => _x( 'Remove cover image', 'Overrides the “Remove featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
+		'use_featured_image'    => _x( 'Use as cover image', 'Overrides the “Use as featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
+		'archives'              => _x( 'client archives', 'The post type archive label used in nav menus. Default “Post Archives”. Added in 4.4', 'textdomain' ),
+		'insert_into_item'      => _x( 'Insertt into client', 'Overrides the “Insert into post”/”Insert into page” phrase (used when inserting media into a post). Added in 4.4', 'textdomain' ),
+		'uploaded_to_this_item' => _x( 'Uploaded to this client', 'Overrides the “Uploaded to this post”/”Uploaded to this page” phrase (used when viewing media attached to a post). Added in 4.4', 'textdomain' ),
+		'filter_items_list'     => _x( 'Filter clients list', 'Screen reader text for the filter links heading on the post type listing screen. Default “Filter posts list”/”Filter pages list”. Added in 4.4', 'textdomain' ),
+		'items_list_navigation' => _x( 'clients list navigation', 'Screen reader text for the pagination heading on the post type listing screen. Default “Posts list navigation”/”Pages list navigation”. Added in 4.4', 'textdomain' ),
+		'items_list'            => _x( 'clients list', 'Screen reader text for the items list heading on the post type listing screen. Default “Posts list”/”Pages list”. Added in 4.4', 'textdomain' ),
+	);
+	$args   = array(
+		'labels'            => $labels,
+		'public'            => true,
+		'publicly_querable' => true,
+		'show_ui'           => true,
+		'show_in_menu'      => true,
+		'query_bar'         => true,
+		'rewrite'           => array( 'slug' => 'client' ),
+		'capability_type'   => 'post',
+		'has_archive'       => true,
+		'hierarchical'      => true,
+		'menu_position'     => 5,
+		'supports'          => array( 'title', 'thumbnail', 'editor', 'excerpt' ),
+	);
+	register_post_type( 'client', $args );
+}
+
+add_action( 'init', 'portfolio_post_type' );
+add_action( 'init', 'client_post_type' );
 add_action( 'init', 'wp_teams_post_type' );
 add_action( 'init', 'wp_services_post_type' );
 add_action( 'init', 'wp_slider_post_type' );
-function your_php_code( $wp_customize ) {
+// registering customizers
+function footer_customization( $wp_customize ) {
 	// Theme Options Panel
-	$wp_customize->add_panel( 'nd_dosth_theme_options', array(
+	$wp_customize->add_panel( 'footer_section', array(
 		//'priority'       => 100,
-		'title'       => __( 'Theme Options', 'nd_dosth' ),
-		'description' => __( 'Theme Modifications like color scheme, theme texts and layout preferences can be done here', 'nd_dosth' ),
+		'title'       => __( 'Footer' ),
+		'description' => __( 'Footer modifications' ),
 	) );
 	// Text Options Section Inside Theme
-	$wp_customize->add_section( 'nd_dosth_text_options', array(
-		'title'    => __( 'Text Options', 'nd_dosth' ),
+	$wp_customize->add_section( 'footer_options', array(
+		'title'    => __( 'Footer Options', 'nd_dosth' ),
 		'priority' => 1,
-		'panel'    => 'nd_dosth_theme_options'
+		'panel'    => 'footer_section'
 	) );
 // Setting for Copyright text.
-	$wp_customize->add_setting( 'nd_dosth_copyright_text', array(
-		'default'           => __( 'All rights reserved ', 'nd_dosth' ),
+	$wp_customize->add_setting( 'copywright_text', array(
+		'default'           => __( '2013 Theme by ', 'nd_dosth' ),
 		'sanitize_callback' => 'sanitize_text_field',
 		'transport'         => 'refresh',
 	) );
 // Control for Copyright text
-	$wp_customize->add_control( 'nd_dosth_copyright_text', array(
+	$wp_customize->add_control( 'copywright_text', array(
 		'type'        => 'text',
 		'priority'    => 10,
-		'section'     => 'nd_dosth_text_options',
+		'section'     => 'footer_options',
 		'label'       => 'Copyright text',
 		'description' => 'Text put here will be outputted in the footer',
 	) );
+	// Setting for author text.
+	$wp_customize->add_setting( 'author', array(
+		'default'           => __( 'GraphBerry' ),
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport'         => 'refresh',
+	) );
+// Control for author text
+	$wp_customize->add_control( 'author', array(
+		'type'        => 'text',
+		'priority'    => 15,
+		'section'     => 'footer_options',
+		'label'       => 'Author',
+		'description' => 'Text put here will be outputted in the footer',
+	) );
+	// Setting for link text.
+	$wp_customize->add_setting( 'website_link', array(
+		'default'           => __( '#' ),
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport'         => 'refresh',
+	) );
+// Control for link text
+	$wp_customize->add_control( 'website_link', array(
+		'type'     => 'text',
+		'priority' => 20,
+		'section'  => 'footer_options',
+		'label'    => 'URL',
+	) );
 }
 
-add_action( 'customize_register', 'your_php_code' );
+add_action( 'customize_register', 'footer_customization' );
 // Customizer for Services
 function add_service_title( $wp_customize ) {
 	$wp_customize->add_panel( 'plutonwp_edit_services', array(
@@ -529,95 +645,89 @@ function add_about_title( $wp_customize ) {
 }
 
 add_action( 'customize_register', 'add_about_title' );
-function portfolio_post_type() {
-	$labels = array(
-		'name'                  => _x( 'Portfolios', 'Post type general name', 'textdomain' ),
-		'singular_name'         => _x( 'Portfolio', 'Post type singular name', 'textdomain' ),
-		'menu_name'             => _x( 'Portfolio', 'Admin Menu text', 'textdomain' ),
-		'add_new'               => __( 'Add new', 'textdomain' ),
-		'add_new_item'          => __( 'Add New portfolio', 'textdomain' ),
-		'new_item'              => __( 'New portfolio', 'textdomain' ),
-		'edit_item'             => __( 'Edit portfolio', 'textdomain' ),
-		'view_item'             => __( 'View portfolio', 'textdomain' ),
-		'all_items'             => __( 'All portfolios', 'textdomain' ),
-		'search_items'          => __( 'Search portfolios', 'textdomain' ),
-		'parent_item_colon'     => __( 'Parent portfolios:', 'textdomain' ),
-		'not_found'             => __( 'No portfolios found.', 'textdomain' ),
-		'not_found_in_trash'    => __( 'No portfolios found in Trash.', 'textdomain' ),
-		'featured_image'        => _x( 'portfolios Cover Image', 'Overrides the “Featured Image” phrase for this post type. Added in 4.3', 'textdomain' ),
-		'set_featured_image'    => _x( 'Set cover image', 'Overrides the “Set featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
-		'remove_featured_image' => _x( 'Remove cover image', 'Overrides the “Remove featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
-		'use_featured_image'    => _x( 'Use as cover image', 'Overrides the “Use as featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
-		'archives'              => _x( 'portfolio archives', 'The post type archive label used in nav menus. Default “Post Archives”. Added in 4.4', 'textdomain' ),
-		'insert_into_item'      => _x( 'Insertt into portfolio', 'Overrides the “Insert into post”/”Insert into page” phrase (used when inserting media into a post). Added in 4.4', 'textdomain' ),
-		'uploaded_to_this_item' => _x( 'Uploaded to this portfolio', 'Overrides the “Uploaded to this post”/”Uploaded to this page” phrase (used when viewing media attached to a post). Added in 4.4', 'textdomain' ),
-		'filter_items_list'     => _x( 'Filter portfolios list', 'Screen reader text for the filter links heading on the post type listing screen. Default “Filter posts list”/”Filter pages list”. Added in 4.4', 'textdomain' ),
-		'items_list_navigation' => _x( 'portfolios list navigation', 'Screen reader text for the pagination heading on the post type listing screen. Default “Posts list navigation”/”Pages list navigation”. Added in 4.4', 'textdomain' ),
-		'items_list'            => _x( 'portfolios list', 'Screen reader text for the items list heading on the post type listing screen. Default “Posts list”/”Pages list”. Added in 4.4', 'textdomain' ),
-	);
-	$args   = array(
-		'labels'            => $labels,
-		'public'            => true,
-		'publicly_querable' => true,
-		'show_ui'           => true,
-		'show_in_menu'      => true,
-		'query_bar'         => true,
-		'rewrite'           => array( 'slug' => 'portfolio' ),
-		'capability_type'   => 'post',
-		'has_archive'       => true,
-		'hierarchical'      => true,
-		'menu_position'     => 5,
-		'supports'          => array( 'title', 'thumbnail', 'editor', 'excerpt' ),
-	);
-	register_post_type( 'portfolio', $args );
+// Customizer for quote section
+function edit_quote_section( $wp_customize ) {
+	$wp_customize->add_panel( 'quote_section', array(
+		'title'       => 'Quote Section',
+		'description' => 'Change the quote on the homepage under about section',
+	) );
+	$wp_customize->add_section( 'quote_edit_section', array(
+		'title'    => 'Quote',
+		'priority' => 10,
+		'panel'    => 'quote_section',
+	) );
+	$wp_customize->add_setting( 'edit_quote', array(
+		'default'           => __( 'Elegance is not the abundance of simplicity. It is the absence of complexity.' ),
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport'         => 'refresh',
+	) );
+	$wp_customize->add_setting( 'edit_button', array(
+		'default'           => __( 'Purchase Now' ),
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport'         => 'refresh',
+	) );
+	$wp_customize->add_control( 'edit_quote', array(
+		'default'  => 'text',
+		'priority' => 10,
+		'section'  => 'quote_edit_section',
+		'label'    => 'Edit Quote',
+	) );
+	$wp_customize->add_control( 'edit_button', array(
+		'default'  => 'text',
+		'priority' => 15,
+		'section'  => 'quote_edit_section',
+		'label'    => 'Button Text'
+	) );
 }
 
-add_action( 'init', 'portfolio_post_type' );
-// custom posttype for clients
-function client_post_type() {
-	$labels = array(
-		'name'                  => _x( 'clients', 'Post type general name', 'textdomain' ),
-		'singular_name'         => _x( 'client', 'Post type singular name', 'textdomain' ),
-		'menu_name'             => _x( 'Clients', 'Admin Menu text', 'textdomain' ),
-		'add_new'               => __( 'Add new', 'textdomain' ),
-		'add_new_item'          => __( 'Add New client', 'textdomain' ),
-		'new_item'              => __( 'New client', 'textdomain' ),
-		'edit_item'             => __( 'Edit client', 'textdomain' ),
-		'view_item'             => __( 'View client', 'textdomain' ),
-		'all_items'             => __( 'All clients', 'textdomain' ),
-		'search_items'          => __( 'Search clients', 'textdomain' ),
-		'parent_item_colon'     => __( 'Parent clients:', 'textdomain' ),
-		'not_found'             => __( 'No clients found.', 'textdomain' ),
-		'not_found_in_trash'    => __( 'No clients found in Trash.', 'textdomain' ),
-		'featured_image'        => _x( 'clients Cover Image', 'Overrides the “Featured Image” phrase for this post type. Added in 4.3', 'textdomain' ),
-		'set_featured_image'    => _x( 'Set cover image', 'Overrides the “Set featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
-		'remove_featured_image' => _x( 'Remove cover image', 'Overrides the “Remove featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
-		'use_featured_image'    => _x( 'Use as cover image', 'Overrides the “Use as featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
-		'archives'              => _x( 'client archives', 'The post type archive label used in nav menus. Default “Post Archives”. Added in 4.4', 'textdomain' ),
-		'insert_into_item'      => _x( 'Insertt into client', 'Overrides the “Insert into post”/”Insert into page” phrase (used when inserting media into a post). Added in 4.4', 'textdomain' ),
-		'uploaded_to_this_item' => _x( 'Uploaded to this client', 'Overrides the “Uploaded to this post”/”Uploaded to this page” phrase (used when viewing media attached to a post). Added in 4.4', 'textdomain' ),
-		'filter_items_list'     => _x( 'Filter clients list', 'Screen reader text for the filter links heading on the post type listing screen. Default “Filter posts list”/”Filter pages list”. Added in 4.4', 'textdomain' ),
-		'items_list_navigation' => _x( 'clients list navigation', 'Screen reader text for the pagination heading on the post type listing screen. Default “Posts list navigation”/”Pages list navigation”. Added in 4.4', 'textdomain' ),
-		'items_list'            => _x( 'clients list', 'Screen reader text for the items list heading on the post type listing screen. Default “Posts list”/”Pages list”. Added in 4.4', 'textdomain' ),
-	);
-	$args   = array(
-		'labels'            => $labels,
-		'public'            => true,
-		'publicly_querable' => true,
-		'show_ui'           => true,
-		'show_in_menu'      => true,
-		'query_bar'         => true,
-		'rewrite'           => array( 'slug' => 'client' ),
-		'capability_type'   => 'post',
-		'has_archive'       => true,
-		'hierarchical'      => true,
-		'menu_position'     => 5,
-		'supports'          => array( 'title', 'thumbnail', 'editor', 'excerpt' ),
-	);
-	register_post_type( 'client', $args );
+add_action( 'customize_register', 'edit_quote_section' );
+// Customizer for Clients Section
+function edit_client_section( $wp_customize ) {
+	$wp_customize->add_panel( 'client_section', array(
+		'title'       => 'Client',
+		'description' => 'Change the client on the homepage under about section',
+	) );
+	$wp_customize->add_section( 'client_edit_section', array(
+		'title'    => 'Client Section',
+		'priority' => 1,
+		'panel'    => 'client_section',
+	) );
+	$wp_customize->add_setting( 'edit_client_title', array(
+		'default'           => __( 'What Client Say?' ),
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport'         => 'refresh',
+	) );
+	$wp_customize->add_setting( 'edit_client_desc', array(
+		'default'           => __( 'Duis mollis placerat quam, eget laoreet tellus tempor eu. Quisque dapibus in purus in dignissim.' ),
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport'         => 'refresh',
+	) );
+	$wp_customize->add_setting( 'edit_client_quote', array(
+		'default'           => __( 'Perfection is Achieved Not When There Is Nothing More to Add, But When There Is Nothing Left to Take Away' ),
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport'         => 'refresh',
+	) );
+	$wp_customize->add_control( 'edit_client_title', array(
+		'default'  => 'text',
+		'priority' => 10,
+		'section'  => 'client_edit_section',
+		'label'    => 'Title',
+	) );
+	$wp_customize->add_control( 'edit_client_desc', array(
+		'default'  => 'text',
+		'priority' => 15,
+		'section'  => 'client_edit_section',
+		'label'    => 'Description'
+	) );
+	$wp_customize->add_control( 'edit_client_quote', array(
+		'default'  => 'text',
+		'priority' => 20,
+		'section'  => 'client_edit_section',
+		'label'    => 'Quote',
+	) );
 }
 
-add_action( 'init', 'client_post_type' );
+add_action( 'customize_register', 'edit_client_section' );
 //hook into the init action and call create_book_taxonomies when it fires
 add_action( 'init', 'create_web_taxonomy', 999 );
 //create a custom taxonomy name it topics for your posts
