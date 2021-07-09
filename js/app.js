@@ -364,12 +364,14 @@ $("#send-mail").click(function () {
     });
 
     //Animate skill bars
-    jQuery('.skills > li > span').one('inview', function (event, visible) {
+    $('.skills > li > span').one('inview', function (event, visible) {
+        console.log("aashique");
         if (visible == true) {
-            jQuery(this).each(function () {
-                jQuery(this).animate({
-                    width: jQuery(this).attr('data-width')
+            $(this).each(function () {
+                $(this).animate({
+                    width: $(this).attr('data-width')
                 }, 3000);
+
             });
         }
     });

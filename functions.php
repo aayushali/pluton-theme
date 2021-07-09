@@ -113,15 +113,17 @@ add_action( 'widgets_init', 'plutonwp_widgets_init' );
  * Enqueue scripts and styles.
  * */
 function plutonwp_scripts() {
-	wp_enqueue_style( 'animate', get_template_directory_uri() . '/css/animate.css', array(), _S_VERSION );
-	wp_enqueue_style( 'plutonwp-style', get_stylesheet_uri(), array(), _S_VERSION );
+//	wp_enqueue_style( 'plutonwp-style', get_stylesheet_uri(), array(), _S_VERSION );
 	wp_enqueue_style( 'bootstrap', get_template_directory_uri() . '/css/bootstrap.css', array(), _S_VERSION );
 	wp_enqueue_style( 'bootstrap-responsive', get_template_directory_uri() . '/css/bootstrap-responsive.css', array(), _S_VERSION );
-	wp_enqueue_style( 'pluton-ie7', get_template_directory_uri() . '/css/pluton-ie7.css', array(), _S_VERSION );
+	wp_enqueue_style( 'styles', get_template_directory_uri() . '/css/style.css', array(), _S_VERSION );
 	wp_enqueue_style( 'pluton', get_template_directory_uri() . '/css/pluton.css', array(), _S_VERSION );
+	wp_enqueue_style( 'pluton-ie7', get_template_directory_uri() . '/css/pluton-ie7.css', array(), _S_VERSION );
 	wp_enqueue_style( 'jquery.cslider', get_template_directory_uri() . '/css/jquery.cslider.css', array(), _S_VERSION );
 	wp_enqueue_style( 'jquery.bxslider', get_template_directory_uri() . '/css/jquery.bxslider.css', array(), _S_VERSION );
-	wp_enqueue_style( 'styles', get_template_directory_uri() . '/css/style.css', array(), _S_VERSION );
+	wp_enqueue_style( 'animate', get_template_directory_uri() . '/css/animate.css', array(), _S_VERSION );
+
+
 	wp_style_add_data( 'plutonwp-style', 'rtl', 'replace' );
 	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'jquery.mixitup', get_template_directory_uri() . '/js/jquery.mixitup.js', array(), _S_VERSION, true );
@@ -376,12 +378,145 @@ function client_post_type() {
 	);
 	register_post_type( 'client', $args );
 }
+function client_image_post_type() {
+$labels = array(
+	'name'                  => _x( 'client-images', 'Post type general name', 'textdomain' ),
+	'singular_name'         => _x( 'client-image', 'Post type singular name', 'textdomain' ),
+	'menu_name'             => _x( 'Clients Logo', 'Admin Menu text', 'textdomain' ),
+	'add_new'               => __( 'Add new', 'textdomain' ),
+	'add_new_item'          => __( 'Add New client-image', 'textdomain' ),
+	'new_item'              => __( 'New client-image', 'textdomain' ),
+	'edit_item'             => __( 'Edit client-image', 'textdomain' ),
+	'view_item'             => __( 'View client-image', 'textdomain' ),
+	'all_items'             => __( 'All client-images', 'textdomain' ),
+	'search_items'          => __( 'Search client-images', 'textdomain' ),
+	'parent_item_colon'     => __( 'Parent client-images:', 'textdomain' ),
+	'not_found'             => __( 'No client-images found.', 'textdomain' ),
+	'not_found_in_trash'    => __( 'No client-images found in Trash.', 'textdomain' ),
+	'featured_image'        => _x( 'client-images Cover Image', 'Overrides the “Featured Image” phrase for this post type. Added in 4.3', 'textdomain' ),
+	'set_featured_image'    => _x( 'Set cover image', 'Overrides the “Set featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
+	'remove_featured_image' => _x( 'Remove cover image', 'Overrides the “Remove featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
+	'use_featured_image'    => _x( 'Use as cover image', 'Overrides the “Use as featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
+	'archives'              => _x( 'client-image archives', 'The post type archive label used in nav menus. Default “Post Archives”. Added in 4.4', 'textdomain' ),
+	'insert_into_item'      => _x( 'Insertt into client-image', 'Overrides the “Insert into post”/”Insert into page” phrase (used when inserting media into a post). Added in 4.4', 'textdomain' ),
+	'uploaded_to_this_item' => _x( 'Uploaded to this client-image', 'Overrides the “Uploaded to this post”/”Uploaded to this page” phrase (used when viewing media attached to a post). Added in 4.4', 'textdomain' ),
+	'filter_items_list'     => _x( 'Filter client-images list', 'Screen reader text for the filter links heading on the post type listing screen. Default “Filter posts list”/”Filter pages list”. Added in 4.4', 'textdomain' ),
+	'items_list_navigation' => _x( 'client-images list navigation', 'Screen reader text for the pagination heading on the post type listing screen. Default “Posts list navigation”/”Pages list navigation”. Added in 4.4', 'textdomain' ),
+	'items_list'            => _x( 'client-images list', 'Screen reader text for the items list heading on the post type listing screen. Default “Posts list”/”Pages list”. Added in 4.4', 'textdomain' ),
+);
+	$args   = array(
+		'labels'            => $labels,
+		'public'            => true,
+		'publicly_querable' => true,
+		'show_ui'           => true,
+		'show_in_menu'      => true,
+		'query_bar'         => true,
+		'rewrite'           => array( 'slug' => 'client-image' ),
+		'capability_type'   => 'post',
+		'has_archive'       => true,
+		'hierarchical'      => true,
+		'menu_position'     => 5,
+		'supports'          => array( 'title', 'thumbnail' ),
+	);
+	register_post_type( 'client-image', $args );
+}
+
+function subscription_post_type() {
+	$labels = array(
+		'name'                  => _x( 'subscriptions', 'Post type general name', 'textdomain' ),
+		'singular_name'         => _x( 'subscription', 'Post type singular name', 'textdomain' ),
+		'menu_name'             => _x( 'Subscription', 'Admin Menu text', 'textdomain' ),
+		'add_new'               => __( 'Add new', 'textdomain' ),
+		'add_new_item'          => __( 'Add New subscription', 'textdomain' ),
+		'new_item'              => __( 'New subscription', 'textdomain' ),
+		'edit_item'             => __( 'Edit subscription', 'textdomain' ),
+		'view_item'             => __( 'View subscription', 'textdomain' ),
+		'all_items'             => __( 'All subscriptions', 'textdomain' ),
+		'search_items'          => __( 'Search subscriptions', 'textdomain' ),
+		'parent_item_colon'     => __( 'Parent subscriptions:', 'textdomain' ),
+		'not_found'             => __( 'No subscriptions found.', 'textdomain' ),
+		'not_found_in_trash'    => __( 'No subscriptions found in Trash.', 'textdomain' ),
+		'featured_image'        => _x( 'subscriptions Cover Image', 'Overrides the “Featured Image” phrase for this post type. Added in 4.3', 'textdomain' ),
+		'set_featured_image'    => _x( 'Set cover image', 'Overrides the “Set featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
+		'remove_featured_image' => _x( 'Remove cover image', 'Overrides the “Remove featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
+		'use_featured_image'    => _x( 'Use as cover image', 'Overrides the “Use as featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
+		'archives'              => _x( 'subscription archives', 'The post type archive label used in nav menus. Default “Post Archives”. Added in 4.4', 'textdomain' ),
+		'insert_into_item'      => _x( 'Insertt into subscription', 'Overrides the “Insert into post”/”Insert into page” phrase (used when inserting media into a post). Added in 4.4', 'textdomain' ),
+		'uploaded_to_this_item' => _x( 'Uploaded to this subscription', 'Overrides the “Uploaded to this post”/”Uploaded to this page” phrase (used when viewing media attached to a post). Added in 4.4', 'textdomain' ),
+		'filter_items_list'     => _x( 'Filter subscriptions list', 'Screen reader text for the filter links heading on the post type listing screen. Default “Filter posts list”/”Filter pages list”. Added in 4.4', 'textdomain' ),
+		'items_list_navigation' => _x( 'subscriptions list navigation', 'Screen reader text for the pagination heading on the post type listing screen. Default “Posts list navigation”/”Pages list navigation”. Added in 4.4', 'textdomain' ),
+		'items_list'            => _x( 'subscriptions list', 'Screen reader text for the items list heading on the post type listing screen. Default “Posts list”/”Pages list”. Added in 4.4', 'textdomain' ),
+	);
+	$args   = array(
+		'labels'            => $labels,
+		'public'            => true,
+		'publicly_querable' => true,
+		'show_ui'           => true,
+		'show_in_menu'      => true,
+		'show_in_rest'      => true,
+		'query_bar'         => true,
+		'rewrite'           => array( 'slug' => 'subscription' ),
+		'capability_type'   => 'post',
+		'has_archive'       => true,
+		'hierarchical'      => true,
+		'menu_position'     => 5,
+		'supports'          => array( 'title' , 'custom-fields'),
+	);
+	register_post_type( 'subscription', $args );
+}
+
+
+function social_post_type() {
+	$labels = array(
+		'name'                  => _x( 'socials', 'Post type general name', 'textdomain' ),
+		'singular_name'         => _x( 'social', 'Post type singular name', 'textdomain' ),
+		'menu_name'             => _x( 'Social Icons', 'Admin Menu text', 'textdomain' ),
+		'add_new'               => __( 'Add new', 'textdomain' ),
+		'add_new_item'          => __( 'Add New social', 'textdomain' ),
+		'new_item'              => __( 'New social', 'textdomain' ),
+		'edit_item'             => __( 'Edit social', 'textdomain' ),
+		'view_item'             => __( 'View social', 'textdomain' ),
+		'all_items'             => __( 'All socials', 'textdomain' ),
+		'search_items'          => __( 'Search socials', 'textdomain' ),
+		'parent_item_colon'     => __( 'Parent socials:', 'textdomain' ),
+		'not_found'             => __( 'No socials found.', 'textdomain' ),
+		'not_found_in_trash'    => __( 'No socials found in Trash.', 'textdomain' ),
+		'featured_image'        => _x( 'socials Cover Image', 'Overrides the “Featured Image” phrase for this post type. Added in 4.3', 'textdomain' ),
+		'set_featured_image'    => _x( 'Set cover image', 'Overrides the “Set featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
+		'remove_featured_image' => _x( 'Remove cover image', 'Overrides the “Remove featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
+		'use_featured_image'    => _x( 'Use as cover image', 'Overrides the “Use as featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
+		'archives'              => _x( 'social archives', 'The post type archive label used in nav menus. Default “Post Archives”. Added in 4.4', 'textdomain' ),
+		'insert_into_item'      => _x( 'Insertt into social', 'Overrides the “Insert into post”/”Insert into page” phrase (used when inserting media into a post). Added in 4.4', 'textdomain' ),
+		'uploaded_to_this_item' => _x( 'Uploaded to this social', 'Overrides the “Uploaded to this post”/”Uploaded to this page” phrase (used when viewing media attached to a post). Added in 4.4', 'textdomain' ),
+		'filter_items_list'     => _x( 'Filter socials list', 'Screen reader text for the filter links heading on the post type listing screen. Default “Filter posts list”/”Filter pages list”. Added in 4.4', 'textdomain' ),
+		'items_list_navigation' => _x( 'socials list navigation', 'Screen reader text for the pagination heading on the post type listing screen. Default “Posts list navigation”/”Pages list navigation”. Added in 4.4', 'textdomain' ),
+		'items_list'            => _x( 'socials list', 'Screen reader text for the items list heading on the post type listing screen. Default “Posts list”/”Pages list”. Added in 4.4', 'textdomain' ),
+	);
+	$args   = array(
+		'labels'            => $labels,
+		'public'            => true,
+		'publicly_querable' => true,
+		'show_ui'           => true,
+		'show_in_menu'      => true,
+		'query_bar'         => true,
+		'rewrite'           => array( 'slug' => 'social' ),
+		'capability_type'   => 'post',
+		'has_archive'       => true,
+		'hierarchical'      => true,
+		'menu_position'     => 5,
+		'supports'          => array( 'title', 'thumbnail', 'editor', 'excerpt' ),
+	);
+	register_post_type( 'social', $args );
+}
 
 add_action( 'init', 'portfolio_post_type' );
 add_action( 'init', 'client_post_type' );
 add_action( 'init', 'wp_teams_post_type' );
 add_action( 'init', 'wp_services_post_type' );
 add_action( 'init', 'wp_slider_post_type' );
+add_action( 'init', 'client_image_post_type');
+add_action( 'init', 'subscription_post_type');
+//add_action('init', 'social_post_type');
 // registering customizers
 function footer_customization( $wp_customize ) {
 	// Theme Options Panel
@@ -399,7 +534,6 @@ function footer_customization( $wp_customize ) {
 // Setting for Copyright text.
 	$wp_customize->add_setting( 'copywright_text', array(
 		'default'           => __( '2013 Theme by ', 'nd_dosth' ),
-		'sanitize_callback' => 'sanitize_text_field',
 		'transport'         => 'refresh',
 	) );
 // Control for Copyright text
@@ -443,7 +577,7 @@ add_action( 'customize_register', 'footer_customization' );
 // Customizer for Services
 function add_service_title( $wp_customize ) {
 	$wp_customize->add_panel( 'plutonwp_edit_services', array(
-		'title'       => __( 'Edit Services', 'pluton' ),
+		'title'       => __( 'Services', 'pluton' ),
 		'description' => __( 'Services Title and Description Modification', 'pluton' ),
 	) );
 	$wp_customize->add_section( 'plutonwp_title_services', array(
@@ -486,7 +620,7 @@ add_action( 'customize_register', 'add_service_title' );
 // Customizer for portfolio
 function add_portfolio_title( $wp_customize ) {
 	$wp_customize->add_panel( 'plutonwp_edit_portfolio', array(
-		'title'       => __( 'Edit Portfolio', 'pluton' ),
+		'title'       => __( 'Portfolio', 'pluton' ),
 		'description' => __( 'Portfolio Title and Description Modification', 'pluton' ),
 	) );
 	$wp_customize->add_section( 'plutonwp_title_portfolio', array(
@@ -529,7 +663,7 @@ add_action( 'customize_register', 'add_portfolio_title' );
 // Customizer for About
 function add_about_title( $wp_customize ) {
 	$wp_customize->add_panel( 'plutonwp_edit_about', array(
-		'title'       => __( 'Edit About', 'pluton ' ),
+		'title'       => __( 'About', 'pluton ' ),
 		'description' => __( 'About title and description Modification', 'pluton' ),
 	) );
 	$wp_customize->add_section( 'plutonwp_title_about', array(
@@ -553,6 +687,15 @@ function add_about_title( $wp_customize ) {
 		'priority' => 4,
 		'panel'    => 'plutonwp_edit_about',
 		'section'  => 'plutonwp_about_text'
+	) );
+	$wp_customize->add_section( 'plutonwp_skills', array(
+		'title'    => 'Skills',
+		'priority' => 5,
+		'panel'    => 'plutonwp_edit_about'
+	) );
+	$wp_customize->add_setting( 'plutonwp_title_text', array(
+		'default'           => __( 'Who We Are?', 'pluton' ),
+		'transport'         => 'refresh'
 	) );
 	$wp_customize->add_setting( 'plutonwp_title_text', array(
 		'default'           => __( 'Who We Are?', 'pluton' ),
@@ -727,6 +870,140 @@ function edit_client_section( $wp_customize ) {
 	) );
 }
 
+// Customizer for price
+
+function edit_Price_section( $wp_customize ) {
+	$wp_customize->add_panel( 'Price_section', array(
+		'title'       => 'Price',
+		'description' => 'Change the Price on the homepage under about section',
+	) );
+	$wp_customize->add_section( 'Price_edit_section', array(
+		'title'    => 'Price Section',
+		'priority' => 1,
+		'panel'    => 'Price_section',
+	) );
+	$wp_customize->add_setting( 'edit_Price_title', array(
+		'default'           => __( 'Price' ),
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport'         => 'refresh',
+	) );
+	$wp_customize->add_setting( 'edit_Price_desc', array(
+		'default'           => __( 'Duis mollis placerat quam, eget laoreet tellus tempor eu. Quisque dapibus in purus in dignissim.' ),
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport'         => 'refresh',
+	) );
+	$wp_customize->add_setting( 'edit_Price_quote', array(
+		'default'           => __( 'We Offer Custom Plans. Contact Us For More Info.' ),
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport'         => 'refresh',
+	) );
+
+	$wp_customize -> add_setting('edit_price_button', array(
+		'default' => __('Contact Us'),
+		'transport'=>'refresh',
+	));
+
+	$wp_customize->add_control( 'edit_Price_title', array(
+		'default'  => 'text',
+		'priority' => 10,
+		'section'  => 'Price_edit_section',
+		'label'    => 'Title',
+	) );
+	$wp_customize->add_control( 'edit_Price_desc', array(
+		'type'  => "textarea",
+		'priority' => 15,
+		'section'  => 'Price_edit_section',
+		'label'    => 'Description'
+	) );
+	$wp_customize->add_control( 'edit_Price_quote', array(
+		'priority' => 20,
+        'type'  => "textarea",
+
+		'section'  => 'Price_edit_section',
+		'label'    => 'Quote',
+	) );
+	$wp_customize -> add_control('edit_price_button', array(
+		'default' => 'text',
+		'priority' => 20,
+		'section' => 'Price_edit_section',
+		'label' => 'Button'
+	));
+}
+
+add_action('customize_register', 'edit_Price_section');
+
+// Customizer for contact
+
+function edit_contact_section( $wp_customize ) {
+	$wp_customize->add_panel( 'contact_section', array(
+		'title'       => 'Contact',
+		'description' => 'Change the contact on the homepage under about section',
+	) );
+	$wp_customize->add_section( 'contact_edit_section', array(
+		'title'    => 'Contact Section',
+		'priority' => 1,
+		'panel'    => 'contact_section',
+	) );
+	$wp_customize->add_setting( 'edit_contact_title', array(
+		'default'           => __( 'Contact Us' ),
+		'transport'         => 'refresh',
+	) );
+
+	$wp_customize-> add_setting('edit_map' , array(
+	    'default' => ''
+    ));
+	$wp_customize->add_setting( 'edit_contact_desc', array(
+		'default'           => __( 'Duis mollis placerat quam, eget laoreet tellus tempor eu. Quisque dapibus in purus in dignissim.' ),
+		'transport'         => 'refresh',
+	) );
+	$wp_customize->add_setting( 'edit_contact_quote', array(
+		'default'           => __( '' ),
+		'transport'         => 'refresh',
+	) );
+
+	$wp_customize -> add_setting('edit_contact_button', array(
+		'default' => __('Contact Us'),
+		'transport'=>'refresh',
+	));
+
+	$wp_customize->add_control( 'edit_contact_title', array(
+		'default'  => 'text',
+		'priority' => 10,
+		'section'  => 'contact_edit_section',
+		'label'    => 'Title',
+	) );
+	$wp_customize->add_control( 'edit_contact_desc', array(
+		'type'  => 'textarea',
+		'priority' => 15,
+		'section'  => 'contact_edit_section',
+		'label'    => 'Description'
+	) );
+	$wp_customize->add_control( 'edit_contact_quote', array(
+		'type'  => 'textarea',
+		'priority' => 20,
+		'section'  => 'contact_edit_section',
+		'label'    => 'Address',
+	) );
+	$wp_customize -> add_control('edit_contact_button', array(
+		'default' => 'text',
+		'priority' => 20,
+		'section' => 'contact_edit_section',
+		'label' => 'Social'
+	));
+
+	$wp_customize -> add_control('edit_map', array(
+	   'type' => 'textarea',
+        'priority' => 25,
+        'section' => 'contact_edit_section',
+        'label' => 'Map'
+    ));
+}
+
+add_action('customize_register', 'edit_contact_section');
+
+
+
+
 add_action( 'customize_register', 'edit_client_section' );
 //hook into the init action and call create_book_taxonomies when it fires
 add_action( 'init', 'create_web_taxonomy', 999 );
@@ -806,15 +1083,38 @@ function create_identity_taxonomy() {
 }
 
 add_action( 'init', 'create_identity_taxonomy', 999 );
-function update_menu_link( $items ) {
-	foreach ( $items as $item ) {
-		$item->url = '#' . strtolower( $item->title );
-	}
 
-	return $items;
+
+
+function newsletter() {
+	echo apply_shortcodes( '[contact-form-7 id="221" title="newsletter"]', false );
 }
 
-add_filter( 'wp_nav_menu_objects', 'update_menu_link', 10, 2 );
+function contact_form() {
+	echo apply_shortcodes( '[contact-form-7 id="209" title="Contact form 1"]', false );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
